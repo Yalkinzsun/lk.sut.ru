@@ -1,0 +1,350 @@
+<!-- https://codepen.io/Serhii75/pen/OEQrgM -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lk | bonch</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/content/site.css"/>
+
+    <style>
+    html {
+    position: relative;
+    min-height: 100%;
+    background-color: #F5F7F9;
+    }
+    .journal_menu {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+    #menu_p1  a {
+        color: black;
+        font-size:18px;
+        padding-left:15px;
+        padding-right:15px;
+    }
+    #menu_p2  a {
+        color:black;
+        font-size:18px;
+        padding-left:15px;
+        padding-right:15px;
+    }
+    #menu_p1 li {
+          margin-right: 15px;
+    }
+    #menu_p2 li {
+          margin-right: 15px;
+    }
+
+    #menu_p1 li #active {
+        background-color: #F6941E;
+        color:black;
+        padding-top: 5px;
+        padding-bottom:5px;
+        border-radius: 50px;
+     }
+
+
+    .table {
+
+    font-size:14px;
+    left:0px;
+    table-layout: fixed;
+    margin:0px 0px 0px 0px;
+    }
+
+    .table, td, th {
+    border-collapse:collapse;
+    }
+
+    .table__header {
+    text-align: left;
+    }
+
+    .table__cell {
+       height: 70px;
+    width: 270px;
+    }
+
+
+    .table__cell_fixed {
+
+
+
+    width: 271px;
+     height: 70px;
+    background-color:white;
+    position: absolute;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    }
+
+    .table_area {
+    margin-left: 15px;
+    margin-right: 15px;
+    overflow-x: auto;
+    }
+
+    th, td {
+
+    left:0px;
+    }
+
+    .boxed label {
+    display: inline-block;
+    width: 10px;
+    padding: 2px 10px 2px 10px;
+    border: solid 2px #ccc;
+    border-radius: 5px;
+    display: inline-flex;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+   .boxed input[type="text"] {
+     padding: 2px 5px 2px 5px;
+     border: solid 2px #ccc;
+     border-radius: 5px;
+     text-align:center;
+     width: 40px;
+}
+    .boxed input[type="radio"] {
+     display: none;
+}
+
+    .boxed input[type="radio"]:checked + label {
+    border: solid 2px #F6941E;
+    background-color: #F6941E;
+    color: white;
+}
+}
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top bg-light">
+    <a style="color:black; font-weight:bold" class="navbar-brand" href="#">Журнал</a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarCollapse"
+            aria-controls="navbarCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <!--  mt-2 mt-md-0 -->
+        <form method="POST" action="/start_journal" class="form-inline mx-auto">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="journal_group">Группа</label>
+
+                    {% if journal_group != "" %}
+                    <input name="journal_group" id="journal_group" class="form-control mx-sm-3 " type="text"
+                           placeholder="Группа" value="{{journal_group}}">
+                    {% else %}
+                    <input name="journal_group" id="journal_group" class="form-control mx-sm-3 " type="text"
+                           placeholder="Группа">
+                    {% endif %}
+
+                </div>
+
+                <div class="form-group">
+                    <label for="journal_sem">Семестр</label>
+                    <select name="journal_sem" class="custom-select mx-sm-3" id="journal_sem">
+                        {% if journal_sem != 0 %}
+                        <option selected>{{journal_sem}}</option>
+                        {% else %}
+                        <option selected>Выбрать</option>
+                        {% endif %}
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="3">4</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="journal_disp">Дисциплина</label>
+                    <select name="journal_disp" class="custom-select mx-sm-3" id="journal_disp">
+
+                        {% if journal_disp != "" %}
+                        <option selected>{{journal_disp}}</option>
+                        {% else %}
+                        <option selected>Выбрать</option>
+                        {% endif %}
+                        <option value="Информатика">Информатика</option>
+                        <option value="Програмная инженерия">Програмная инженерия</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Готово</button>
+        </form>
+    </div>
+</nav>
+
+<!--  <div class="container-fluid"> -->
+{% block content %}
+
+{% if show_table %}
+<form id="my_form" method="POST" action="/start_journal"></form>
+<div class="journal_menu">
+    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+        <li><a id="active" href="#">Посещаемость</a></li>
+        <li><a href="#">Работы </a></li>
+        <li><a href="#">Статистика</a></li>
+        <li><a href="#">Аттестация+</a></li>
+        <li><a href="#">Содержание дисциплины</a></li>
+        <li><a href="#">Ведомости</a></li>
+    </ul>
+    <!--<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+        <li><a href="#">Состояние аудиторий</a></li>
+        <li><a href="#">Замена ППС (на сегодня)</a></li>
+        <li><a href="#">Инструкции</a></li>
+            <li>
+        <div class="btn-group new">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Дополнительно
+      </button>
+
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Дополнительно</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+      </div>
+    </div>
+           </li>
+    </ul> -->
+</div>
+<div class="table_area">
+        <table align=left class="table table-bordered">
+            <tr class="table__header">
+                {% for header in headings %}
+                {% if headings.index(header) == 0 %}
+                <th class="table__cell_fixed">{{header}}</th>
+
+                {% elif headings.index(header) == selected_day %}
+                <th style="background-color:#FEEFDD" class="table__cell">{{header}}</th>
+                {% else %}
+                <th class="table__cell">{{header}}</th>
+                {% endif %}
+                {% endfor %}
+            </tr>
+
+
+            {% for row in data %}
+<!--            {% print(row) %}-->
+            <tr align=left class="table__row">
+                {% for cell in row %}
+
+                {% if row.index(cell) == 0 %}
+                <td class="table__cell_fixed">{{cell}}</td>
+
+
+
+
+                {% elif row.index(cell) == selected_day and inserting %}
+
+                <th style="background-color:#FEEFDD; width:350px;">
+
+                    <div class="boxed">
+                       <label style="margin-left: 10px; margin-right:20px; border: 0px;">100%</label>
+                       <input type="radio" id="be{{data.index(row)}}" name="{{data.index(row)}}" value="П{{data.index(row)}}" form="my_form">
+                       <label style="margin-right:10px" for="be{{data.index(row)}}">П</label>
+
+                       <input type="radio" id="absent_without_a_valid_reason{{data.index(row)}}" name="{{data.index(row)}}" value="Н{{data.index(row)}}" form="my_form">
+                       <label for="absent_without_a_valid_reason{{data.index(row)}}">Н</label>
+
+                        <input type="radio" id="ill{{data.index(row)}}" name="{{data.index(row)}}" value="Б{{data.index(row)}}" form="my_form">
+                       <label for="ill{{data.index(row)}}">Б</label>
+
+                        <input type="radio" id="absent_with_a_good_reason{{data.index(row)}}" name="{{data.index(row)}}" value="У{{data.index(row)}}" form="my_form">
+                       <label style="margin-right:10px" for="absent_with_a_good_reason{{data.index(row)}}">У</label>
+
+                        <input type="text" id="mark{{data.index(row)}}" name="mark"  form="my_form">
+<!--                        placeholder="Оценка"-->
+
+
+                    </div>
+
+                </th>
+
+                {% elif row.index(cell) == selected_day %}
+
+                <th style="background-color:#FEEFDD" class="table__cell"> {{cell}}
+                </th>
+
+                {% else %}
+                <th class="table__cell"> {{cell}}</th>
+
+                {% endif %}
+
+
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+</div>
+<button form="my_form" class="btn btn-outline-success my-2 my-sm-0" type="submit">Подписать</button>
+{% else %}
+<div style="display:flex; align-content:center; justify-content: center; height: 250px"><p style="font-size:18px; font-weight: bold; margin-top: 100px">Выберите группу, семестр и дисциплину</p></div>
+{% endif %}
+
+{% endblock %}
+
+
+<!--
+<footer class="footer">
+    <div class="container">
+        <div class="text-center">
+            <span>2022</span>
+        </div>
+    </div>
+</footer>
+-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+  $('.nav-link-collapse').on('click', function() {
+    $('.nav-link-collapse').not(this).removeClass('nav-link-show');
+    $(this).toggleClass('nav-link-show');
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+    $( ".mr-auto .nav-item" ).bind( "click", function(event) {
+        event.preventDefault();
+        var clickedItem = $( this );
+        $( ".mr-auto .nav-item" ).each( function() {
+            $( this ).removeClass( "active" );
+        });
+        clickedItem.addClass( "active" );
+    });
+});
+
+
+
+
+</script>
+</body>
+</html>

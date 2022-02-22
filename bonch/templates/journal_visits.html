@@ -1,0 +1,110 @@
+{% extends "start_journal.html" %}
+
+{% block content %}
+
+<form id="my_form" method="POST" action="/start_journal"></form>
+<div class="journal_menu">
+    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+        <li><a id="active" href="#">Посещаемость</a></li>
+        <li><a href="#">Работы </a></li>
+        <li><a href="#">Статистика</a></li>
+        <li><a href="#">Аттестация+</a></li>
+        <li><a href="#">Содержание дисциплины</a></li>
+        <li><a href="#">Ведомости</a></li>
+    </ul>
+    <!--<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+        <li><a href="#">Состояние аудиторий</a></li>
+        <li><a href="#">Замена ППС (на сегодня)</a></li>
+        <li><a href="#">Инструкции</a></li>
+            <li>
+        <div class="btn-group new">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Дополнительно
+      </button>
+
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Дополнительно</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+      </div>
+    </div>
+           </li>
+    </ul> -->
+</div>
+<div class="table_area">
+        <table align=left class="table table-bordered">
+            <tr class="table__header">
+                {% for header in headings %}
+                {% if headings.index(header) == 0 %}
+                <th class="table__cell_fixed">{{header}}</th>
+
+                {% elif headings.index(header) == selected_day %}
+                <th style="background-color:#FEEFDD" class="table__cell">{{header}}</th>
+                {% else %}
+                <th class="table__cell">{{header}}</th>
+                {% endif %}
+                {% endfor %}
+            </tr>
+
+
+            {% for row in data %}
+<!--            {% print(row) %}-->
+            <tr align=left class="table__row">
+                {% for cell in row %}
+
+                {% if row.index(cell) == 0 %}
+                <td class="table__cell_fixed">{{cell}}</td>
+
+
+
+
+                {% elif row.index(cell) == selected_day and inserting %}
+
+                <th style="background-color:#FEEFDD; width:350px;">
+
+                    <div class="boxed">
+                       <label style="margin-left: 10px; margin-right:20px; border: 0px;">100%</label>
+                       <input type="radio" id="be{{data.index(row)}}" name="{{data.index(row)}}" value="П{{data.index(row)}}" form="my_form">
+                       <label style="margin-right:10px" for="be{{data.index(row)}}">П</label>
+
+                       <input type="radio" id="absent_without_a_valid_reason{{data.index(row)}}" name="{{data.index(row)}}" value="Н{{data.index(row)}}" form="my_form">
+                       <label for="absent_without_a_valid_reason{{data.index(row)}}">Н</label>
+
+                        <input type="radio" id="ill{{data.index(row)}}" name="{{data.index(row)}}" value="Б{{data.index(row)}}" form="my_form">
+                       <label for="ill{{data.index(row)}}">Б</label>
+
+                        <input type="radio" id="absent_with_a_good_reason{{data.index(row)}}" name="{{data.index(row)}}" value="У{{data.index(row)}}" form="my_form">
+                       <label style="margin-right:10px" for="absent_with_a_good_reason{{data.index(row)}}">У</label>
+
+                        <input type="text" id="mark{{data.index(row)}}" name="mark"  form="my_form">
+<!--                        placeholder="Оценка"-->
+
+
+                    </div>
+
+                </th>
+
+                {% elif row.index(cell) == selected_day %}
+
+                <th style="background-color:#FEEFDD" class="table__cell"> {{cell}}
+                </th>
+
+                {% else %}
+                <th class="table__cell"> {{cell}}</th>
+
+                {% endif %}
+
+
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+</div>
+<button form="my_form" class="btn btn-outline-success my-2 my-sm-0" type="submit">Подписать</button>
+
+
+
+{% endblock %}
