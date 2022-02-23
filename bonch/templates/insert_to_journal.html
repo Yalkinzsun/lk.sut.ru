@@ -3,8 +3,6 @@
 {% block content %}
 
 
-<form id="insert_visits" action="{{ url_for('insert_to_journal', index=index) }}" method="POST"></form>
-
 <div class="journal_menu">
     <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
         <li><a id="active" href="#">Посещаемость</a></li>
@@ -35,21 +33,22 @@
            </li>
     </ul> -->
 </div>
+<form id="insert_visits" action="{{ url_for('insert_to_journal', index=index) }}" method="POST"></form>
 <div class="table_area">
-        <table align=left class="table table-bordered">
+        <table align=left class="table table-bordered" style="width: 300px">
             <tr class="table__header">
                 {% for header in headings %}
                 {% if headings.index(header) == 0 %}
-                <th class="table__cell_fixed">
+                <th class="table__cell_fixed" style="width: 300px; position: sticky;">
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
                 </th>
 
                 {% elif headings.index(header) == index %}
-                <th style="background-color:#FEEFDD" class="table__cell">
+                <th  class="table__cell" style="background-color:#FEEFDD; width: 300px">
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
                 </th>
                 {% else %}
-                <th class="table__cell">
+                <th class="table__cell" style="width: 300px">
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
                 </th>
                 {% endif %}
@@ -63,12 +62,16 @@
                 {% for cell in row %}
 
                 {% if row.index(cell) == 0 %}
-                <td class="table__cell_fixed">{{cell}}</td>
+                <td class="table__cell_fixed" style="width: 300px; position: sticky;">
+
+                    {{cell[0]}}.  {{cell[1]}}  <br> <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
+
+                </td>
 
 
 
 
-                {% elif row.index(cell) == index and inserting %}
+                {% elif row.index(cell) == 1 and inserting %}
 
                 <th style="background-color:#FEEFDD">
 
@@ -114,8 +117,9 @@
         </table>
 
 </div>
-<button form="insert_visits" class="btn btn-outline-success my-2 my-sm-0" type="submit">Подписать</button>
-
+<div style="padding-top: 15px; padding-left: 315px; padding-bottom: 25px">
+<button form="insert_visits" class="btn btn-outline-success my-2 my-sm-0" type="submit" >Подписать</button>
+</div>
 
 
 

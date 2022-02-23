@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from bonch import app
 import sqlite3
 import sys
+import uuid
 from datetime import date
 
 
@@ -25,19 +26,25 @@ def get_data_from_session_if_possible():
 
 
 def get_data_from_db():
-    headings0 = ({"Студент": ""}, {"-": ""}, {"Практика 1": "01.09"}, {"Лекция 1": "01.09"},
-                {"Практика 2": "01.09"}, {"Лекция 2": "01.09"}, {"Практика 3": "01.09"},
-                {"Лекция 3": "01.09"}, {"Практика 4": "01.09"}, {"Лекция 4": "01.09"})
-
     headings = (("Студент", ""), ("", ""), ("Практика 1", "01.09"), ("Лекция 1", "01.09"),
                 ("Практика 2", "01.09"), ("Лекция 2", "01.09"), ("Практика 3", "01.09"),
                 ("Лекция 3", "01.09"), ("Практика 4", "01.09"), ("Лекция 4", "01.09"))
-
     data = (
-        ((0, "Хабельников Никита Андреевич", ""), "1", "2", "3", "4", "5", "6", "7", "8", "9"),
-        ((1, "Горшунова Светалана Валерьевна", "староста"), "1", "2", "3", "4", "5", "6", "7", "8", "9"),
-        ((2, "Горбулин Станислав Евгеньевич"), "1", "2", "3", "4", "5", "6", "7", "8", "9"),
-        ((3, "Горбулин Станислав Евгеньевич"), "1", "2", "3", "4", "5", "6", "7", "8", "9"),
+        ((1, "Хабельников Никита Андреевич", ""), ("", "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
+
+        ((2, "Хорошева Евгения Онеговна", "староста"), ("", "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
+
+        ((3, "Земляникина Полина Ахметовна", ""), ("", "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
+
+        ((4, "Ежегодов Дмитрий Сергеевич", ""), ("", "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""))
     )
     return headings, data
 
@@ -46,7 +53,7 @@ def get_column_index_for_highlighting(headings):
     today = date.today()
 
     if not today.strftime("%d.%m.%Y") in headings:
-        return 2
+        return 3
     else:
         return 1
 
@@ -91,11 +98,16 @@ def journal():
 @app.route('/journal/insert_<int:index>', methods=('GET', 'POST'))
 def insert_to_journal(index):
     headings, data = get_data_from_db()
+    truncated_headings = (headings[0], headings[index])
+    truncated_data = []
+    for row in data:
+        truncated_data.append((row[0], row[index]))
+
     journal_group, journal_sem, journal_disp = get_data_from_session_if_possible()
     return render_template('insert_to_journal.html',
                            index=index,
-                           headings=headings,
-                           data=data,
+                           headings=truncated_headings,
+                           data=tuple(truncated_data),
                            journal_group=journal_group,
                            journal_sem=journal_sem,
                            inserting=True,

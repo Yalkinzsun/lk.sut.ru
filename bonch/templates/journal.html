@@ -2,4 +2,55 @@
 
 {% block content %}
 <p> {{index}}</p>
+<div class="table_area">
+        <table align=left class="table table-bordered">
+            <tr class="table__header">
+                {% for header in headings %}
+                {% if headings.index(header) == 0 %}
+                <th class="table__cell_fixed">
+                    {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
+                </th>
+
+                {% elif headings.index(header) == index %}
+                <th style="background-color:#FEEFDD" class="table__cell">
+                    {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
+                </th>
+                {% else %}
+                <th class="table__cell">
+                    {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
+                </th>
+                {% endif %}
+                {% endfor %}
+            </tr>
+
+
+            {% for row in data %}
+<!--            {% print(row) %}-->
+            <tr align=left class="table__row">
+                {% for cell in row %}
+
+                {% if row.index(cell) == 0 %}
+                <td class="table__cell_fixed">
+                       {{cell[0]}}.  {{cell[1]}}  <br> <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
+                </td>
+
+
+                {% elif row.index(cell) == index %}
+
+                <th style="background-color:#FEEFDD" class="table__cell">
+
+                    {{cell[1]}} {{cell[2]}}
+                </th>
+
+                {% else %}
+                <th class="table__cell">
+                     {{cell[1]}} {{cell[2]}}
+                </th>
+
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+</div>
 {% endblock %}
