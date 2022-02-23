@@ -1,11 +1,11 @@
 {% extends "start_journal.html" %}
 
 {% block content %}
-<p> {{index}}</p>
 <div class="table_area">
         <table align=left class="table table-bordered">
             <tr class="table__header">
                 {% for header in headings %}
+                 {% print(data[0][index][1]) %}
                 {% if headings.index(header) == 0 %}
                 <th class="table__cell_fixed">
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
@@ -13,11 +13,36 @@
 
                 {% elif headings.index(header) == index %}
                 <th style="background-color:#FEEFDD" class="table__cell">
+                    <div style="display:flex; justify-content: space-between;">
+                        <div>
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
+                        </div>
+                         {% if data[0][index][1] == "" %}
+                        <a href="{{ url_for('insert_to_journal', index=headings.index(header)) }}">
+                            <img src="/static/img/edit_icon_orange.svg" alt="edit icon">
+                        </a>
+                        {% else %}
+                        <a href="{{ url_for('insert_to_journal', index=headings.index(header)) }}">
+                            <img src="/static/img/edit_icon.svg" alt="edit icon">
+                        </a>
+                        {% endif %}
+                    </div>
                 </th>
                 {% else %}
                 <th class="table__cell">
+                    <div style="display:flex; justify-content: space-between;">
+                        <div>
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
+                        </div>
+
+                         {% if data[0][headings.index(header)][1] != "" %}
+
+                        <a href="{{ url_for('insert_to_journal', index=headings.index(header)) }}">
+                            <img src="/static/img/edit_icon.svg" alt="edit icon">
+                        </a>
+                        {% endif %}
+
+                    </div>
                 </th>
                 {% endif %}
                 {% endfor %}
