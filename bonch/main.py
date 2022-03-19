@@ -56,21 +56,23 @@ def get_works_data_from_db():
                 ("ПР 2", "до 01.09"), ("ЛР 2", "до 01.09"), ("ЛР 3", "до 01.09"),
                 ("ЛР 4", "до 01.09"))
     data = (
-        ((1, "Хабельников Никита Андреевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st0", ""), (uuid.uuid4(), "st6", ""),
+        ((105, "Хабельников Никита Андреевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st0", ""), (uuid.uuid4(), "st6", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
 
-        ((2, "Хорошева Евгения Онеговна", "староста"), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st1", ""), (uuid.uuid4(), "st4", ""),
+        ((243, "Хорошева Евгения Онеговна", "староста"), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st1", ""), (uuid.uuid4(), "st4", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
 
-        ((3, "Земляникина Полина Ахметовна", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st2", ""), (uuid.uuid4(), "st5", ""),
+        ((512, "Земляникина Полина Ахметовна", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st2", ""), (uuid.uuid4(), "st5", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
 
-        ((4, "Ежегодов Дмитрий Сергеевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st3", ""), (uuid.uuid4(), "", ""),
+        ((346, "Ежегодов Дмитрий Сергеевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "st3", ""), (uuid.uuid4(), "", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""))
     )
     return headings, data
 
+def get_students_work_data_from_db():
 
+    return True
 
 
 
@@ -163,6 +165,32 @@ def students_works():
                            journal_sem=journal_sem,
                            journal_disp=journal_disp)
 
+
+@app.route('/journal/works/<string:works_id>')
+def check_students_work(works_id):
+    # headings, data = get_students_work_data_from_db()
+    journal_group, journal_sem, journal_disp = get_data_from_session_if_possible()
+    file_name="IST032m pr1.pdf"
+    name_of_work = "Практическая работа #1"
+    deadline = "до 15 апреля 2022"
+    student = "Иванова И. И."
+    status = "st3"
+    comment = "Очень большой доинный комментарий к прошлой работе, кторая на самом деле была выполнена крайне " \
+              "небрежно и к тому же совершенно неверно "
+    time_of_comment = "12 апреля 2022 14:10"
+    return render_template('check_students_work.html',
+                           # headings=headings,
+                           # data=data,
+                           file_name=file_name,
+                           name_of_work= name_of_work,
+                           deadline=deadline,
+                           student=student,
+                           status=status,
+                           comment=comment,
+                           time_of_comment=time_of_comment,
+                           journal_group=journal_group,
+                           journal_sem=journal_sem,
+                           journal_disp=journal_disp)
 
 @app.route('/journal/statistic')
 def show_statistic():

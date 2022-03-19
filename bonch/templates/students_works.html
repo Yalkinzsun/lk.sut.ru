@@ -71,7 +71,7 @@
 
                 {% if row.index(cell) == 0 %}
                 <td class="table__cell_fixed" style="width: 300px; height: 86px">
-                       {{cell[0]}}.  {{cell[1]}}  <br> <p style="font-weight:normal; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
+                       {{data.index(row) + 1}}.  {{cell[1]}}  <br> <p style="font-weight:normal; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
                 </td>
 
                 {% else %}
@@ -81,31 +81,34 @@
                     <div style="display:flex; align-content:center; justify-content: center;">
                         <div>
                     <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px;text-align:center;">ждёт оценки</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm active" role="button"  style="background-color: #F6941E; color: white; border:0px; margin-top:10px; margin-bottom:10px">проверить</a>
-                            </div>
+                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"  target="_blank" style="background-color: #F6941E; color: white; border:0px; margin-top:10px; margin-bottom:10px">проверить</a>
+                        </div>
                     </div>
                    {% elif cell[1] == "st2" %}
                      <div style="display:flex; align-content:center; justify-content: center;">
                         <div>
                     <p style="color: #28A745; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">&#10003; зачтено</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm active" role="button"  style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
+                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"  target="_blank" style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
                             </div>
                     </div>
                      {% elif cell[1] == "st3" %}
                      <div style="display:flex; align-content:center; justify-content: center;">
                         <div>
                     <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">&#9998; доделать</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm active" role="button"  style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
+                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"  target="_blank" style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
                             </div>
                     </div>
                       {% elif cell[1] == "st4" %}
                      <div style="display:flex; align-content:center; justify-content: center;">
                         <div>
                     <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">&#10007; переделать</p>
-                    <a href="#" class="btn btn-outline-secondary btn-sm active" role="button"  style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
+                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"  target="_blank" style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
                             </div>
                     </div>
 
+                    {% else %}
+
+<!--                    {{data[data.index(row)][0][0]}}{{row.index(cell)}}-->
                      {% endif %}
                 </th>
 

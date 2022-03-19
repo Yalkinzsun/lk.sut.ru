@@ -1,0 +1,95 @@
+{% extends "start_journal.html" %}
+
+{% block content %}
+<div style="height:100%">
+<div class="journal_menu">
+    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+        <li><a href="#">Посещаемость</a></li>
+        <li><a id="active" href="#">Работы </a></li>
+        <li><a href="#">Статистика</a></li>
+        <li><a href="#">Аттестация+</a></li>
+        <li><a href="#">Содержание дисциплины</a></li>
+        <li><a href="#">Ведомости</a></li>
+    </ul>
+    <!--<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+        <li><a href="#">Состояние аудиторий</a></li>
+        <li><a href="#">Замена ППС (на сегодня)</a></li>
+        <li><a href="#">Инструкции</a></li>
+            <li>
+        <div class="btn-group new">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Дополнительно
+      </button>
+
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Дополнительно</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+      </div>
+    </div>
+           </li>
+    </ul> -->
+</div>
+
+<div style="padding-left:10px; padding-right:10px; padding-top: 0px; height: 90%; width: 100%; display:flex; flex-direction: row; align-items: stretch">
+  <div  style="margin-left:10px; width: 55%; height: 800px">
+      <object
+	data="/static/students works/{{file_name}}"
+	type="application/pdf"
+	width="100%"
+	height="100%">
+	  <p>
+		Ваш браузер не поддерживает просмотр PDF-документов.
+		<a href="/static/students works/IST032m pr1.pdf">Скачать PDF</a>
+	  </p>
+    </object>
+
+
+  </div>
+  <div  style="width:40%;">
+  <div style="width:100%; height:100%; background-color: white; padding-left: 50px; padding-right:30px; padding-top:0px">
+      <h3 style="margin-bottom: 15px">{{name_of_work}}</h3>
+      <div style="display:flex; flex-direction: row">
+      <p style="margin-right: 10px; color: gray">Срок сдачи: </p>
+          <p>{{deadline}}</p>
+          </div>
+      <div style="display:flex; flex-direction: row">
+      <p style="margin-right: 10px; color: gray">Студент: </p>
+          <p>{{student}}</p>
+          </div>
+      <div style="display:flex; flex-direction: row">
+      <p style="margin-right: 10px; color: gray">Статус: </p>
+
+          {% if status == 'st1' %}
+          <p style="color: orange">ждёт оценки</p>
+          {% elif status == 'st2' %}
+          <p style="color: #28A745">&#10003; зачтено</p>
+          {% elif status == 'st3' %}
+          <p style="color: black">&#9998; доделать</p>
+          {% elif status == 'st4' %}
+          <p style="color: black">&#10007; переделать</p>
+          {% elif status == 'st5' %}
+          <p style="color: orange">&#9998; доделать (новый ответ)</p>
+          {% elif status == 'st6' %}
+          <p style="color: orange">&#10007; переделать (новый ответ)</p>
+          {% endif %}
+          </div>
+  </div>
+
+  </div>
+  <div  style="width:5%;">
+
+   <a href="{{ url_for('students_works') }}">
+       <img style="width:24px; height:24px; margin: 0px" src="/static/img/close_icon.svg" alt="edit icon">
+   </a>
+      <a href="#">
+       <img id="next_button" style="width:48x; height:48px; background-color:#F4F4F4; border-radius: 15px; margin-top: 250px" src="/static/img/next_icon.svg" alt="edit icon">
+   </a>
+
+  </div>
+</div>
+
+</div>
+{% endblock %}
