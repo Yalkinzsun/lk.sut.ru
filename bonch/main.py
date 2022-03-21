@@ -95,7 +95,7 @@ def index():
 
 
 @app.route('/start_journal', methods=('GET', 'POST'))
-def journal():
+def start_journal():
     headings = get_visits_data_from_db()[0]
 
     if request.method == 'POST':
@@ -131,7 +131,11 @@ def insert_to_journal(index):
         truncated_data.append((row[0], row[index]))
 
     journal_group, journal_sem, journal_disp = get_data_from_session_if_possible()
-    return render_template('insert_to_journal.html',
+    if journal_group == '':
+        return redirect(url_for('start_journal'))
+    else:
+
+        return render_template('insert_to_journal.html',
                            index=index,
                            headings=truncated_headings,
                            data=tuple(truncated_data),
@@ -145,7 +149,10 @@ def insert_to_journal(index):
 def show_journal(index):
     headings, data = get_visits_data_from_db()
     journal_group, journal_sem, journal_disp = get_data_from_session_if_possible()
-    return render_template('journal.html',
+    if journal_group == '':
+        return redirect(url_for('start_journal'))
+    else:
+        return render_template('journal.html',
                            index=index,
                            headings=headings,
                            data=data,
@@ -158,7 +165,10 @@ def show_journal(index):
 def students_works():
     headings, data = get_works_data_from_db()
     journal_group, journal_sem, journal_disp = get_data_from_session_if_possible()
-    return render_template('students_works.html',
+    if journal_group == '':
+        return redirect(url_for('start_journal'))
+    else:
+        return render_template('students_works.html',
                            headings=headings,
                            data=data,
                            journal_group=journal_group,
@@ -166,7 +176,7 @@ def students_works():
                            journal_disp=journal_disp)
 
 
-@app.route('/journal/works/<string:works_id>')
+@app.route('/journal/works/<string:works_id>', methods=('GET', 'POST'))
 def check_students_work(works_id):
     # headings, data = get_students_work_data_from_db()
     journal_group, journal_sem, journal_disp = get_data_from_session_if_possible()
@@ -178,9 +188,19 @@ def check_students_work(works_id):
     comment = "Очень большой доинный комментарий к прошлой работе, кторая на самом деле была выполнена крайне " \
               "небрежно и к тому же совершенно неверно "
     time_of_comment = "12 апреля 2022 14:10"
-    return render_template('check_students_work.html',
+    next_work_id = ''
+
+    if request.method == 'POST':
+        next_work_id = "12345"
+
+    if journal_group == '':
+        return redirect(url_for('start_journal'))
+    else:
+
+        return render_template('check_students_work.html',
                            # headings=headings,
                            # data=data,
+                           works_id=works_id,
                            file_name=file_name,
                            name_of_work= name_of_work,
                            deadline=deadline,
@@ -188,9 +208,11 @@ def check_students_work(works_id):
                            status=status,
                            comment=comment,
                            time_of_comment=time_of_comment,
+                           next_work_id=next_work_id,
                            journal_group=journal_group,
                            journal_sem=journal_sem,
                            journal_disp=journal_disp)
+
 
 @app.route('/journal/statistic')
 def show_statistic():
