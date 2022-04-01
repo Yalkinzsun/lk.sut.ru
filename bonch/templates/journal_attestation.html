@@ -7,7 +7,7 @@
                 {% for header in headings %}
 
                 {% if headings.index(header) == 0 %}
-                <th class="table__cell_fixed">
+                <th class="table__cell_fixed" style="width: 300px;">
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
                 </th>
 
@@ -17,30 +17,17 @@
                         <div>
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
                         </div>
-                         {% if data[0][index][1] == "" %}
-                        <a href="{{ url_for('insert_to_journal', day_index=headings.index(header)) }}">
-                            <img src="/static/img/edit_icon_orange.svg" alt="edit icon">
-                        </a>
-                        {% else %}
-                        <a href="{{ url_for('insert_to_journal', index=headings.index(header)) }}">
-                            <img src="/static/img/edit_icon.svg" alt="edit icon">
-                        </a>
-                        {% endif %}
+
                     </div>
                 </th>
                 {% else %}
-                <th class="table__cell">
+                <th class="table__cell" style="width: 150px;">
                     <div style="display:flex; justify-content: space-between;">
                         <div>
                     {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
                         </div>
 
-                         {% if data[0][headings.index(header)][1] != "" %}
 
-                        <a href="{{ url_for('insert_to_journal', day_index=headings.index(header)) }}">
-                            <img src="/static/img/edit_icon.svg" alt="edit icon">
-                        </a>
-                        {% endif %}
 
                     </div>
                 </th>
@@ -55,22 +42,54 @@
                 {% for cell in row %}
 
                 {% if row.index(cell) == 0 %}
-                <td class="table__cell_fixed">
+                <td class="table__cell_fixed" style="width: 300px;">
                        {{cell[0]}}.  {{cell[1]}}  <br> <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
                 </td>
 
+                {% elif row.index(cell) == 3 and cell != ""  %}
 
-                {% elif row.index(cell) == index %}
+                <th class="table__cell" style="width: 200px;">
+                    <div style="display:flex"><p style="margin:0px">  {{cell[1]}} </p> <p style="margin:0px; color:grey"> /{{count_of_works}}</p> </div>
+                </th>
 
-                <th style="background-color:#FEEFDD" class="table__cell">
+                {% elif row.index(cell) == 4 and cell != ""  %}
 
-                    {{cell[1]}} {{cell[2]}}
+                <th class="table__cell" style="width: 200px;">
+                    <div style="display:flex"><p style="margin:0px">  {{cell[1]}} </p> <p style="margin:0px; color:grey"> /{{count_of_practical_classes}}</p> <p style="margin-left:10px; color:grey">  ({{'{:.0f}'.format((cell[1])*100/count_of_practical_classes)  }}%)</p> </div>
+                </th>
+
+                {% elif row.index(cell) == 5 and cell != ""  %}
+
+                <th class="table__cell" style="width: 200px;">
+                    <div style="display:flex"><p style="margin:0px">  {{cell[1]}} </p> <p style="margin:0px; color:grey"> /{{count_of_all_classes}}</p> <p style="margin-left:10px; color:grey">  ({{'{:.0f}'.format((cell[1])*100/count_of_all_classes)  }}%)</p> </div>
+                </th>
+
+                 {% elif row.index(cell) == 6 and cell != ""  %}
+
+                <th class="table__cell" style="width: 200px;">
+                    <div style="display:flex"><p style="margin:0px">  {{cell[1]}} </p> <p style="margin:0px; color:grey"> /{{count_of_discipline_points}}</p>  </div>
+                </th>
+
+                {% elif row.index(cell) == 8  %}
+
+                <th class="table__cell" style="width: 200px;">
+                    {% if row[6][1] < count_of_points_for_three  %}
+                    <div style="display:flex"><p style="margin:0px; color: red">  неудовл. </p>   </div>
+                    {% elif row[6][1] >= count_of_points_for_three and row[6][1] < count_of_points_for_four  %}
+                    <div style="display:flex"><p style="margin:0px;">  удовл. </p>  </div>
+                     {% elif row[6][1] >= count_of_points_for_four and row[6][1] < count_of_points_for_five  %}
+                    <div style="display:flex"><p style="margin:0px"> хорошо </p> </div>
+                     {% elif row[6][1] >= count_of_points_for_five %}
+                    <div style="display:flex"><p style="margin:0px; color: #28A745">  отлично </p> </div>
+                    {% endif %}
                 </th>
 
                 {% else %}
-                <th class="table__cell">
-                     {{cell[1]}} {{cell[2]}}
+
+                 <th class="table__cell" style="width: 200px;">
+                     {{cell[1]}}
                 </th>
+
 
                 {% endif %}
                 {% endfor %}

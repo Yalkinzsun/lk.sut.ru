@@ -86,34 +86,40 @@ def get_works_data_from_db():
 
 
 def get_attestation_data_from_db():
-    headings = (("Студент", ""), ("", ""), ("", ""), ("Практика 1", "01.09"), ("Лекция 1", "01.09"),
-                ("Практика 2", "01.09"), ("Лекция 2", "01.09"), ("Практика 3", "01.09"),
-                ("Лекция 3", "01.09"), ("Практика 4", "01.09"), ("Лекция 4", "01.09"))
+    count_of_works = 15
+    count_of_practical_classes = 15
+    count_of_all_classes = 30
+    count_of_discipline_points = 100
+
+    count_of_points_for_three = 65
+    count_of_points_for_four = 75
+    count_of_points_for_five = 90
+
+    headings = (("Студент", ""), ("", ""), ("", ""), ("Кол-во сданных работ", ""), ("Посещаемость", "практика"),
+                ("Посещаемость", "общая"), ("Кол-во баллов", ""), ("Пром. аттестация", "доступно с 11.11"),
+                ("Рек. оценка", ""), ("Экзамен", "доступно с 10.01"))
     data = (
-        ((1, "Хабельников Никита Андреевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "Н", ""),
-         (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+        ((1, "Хабельников Никита Андреевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "6", ""),
+         (uuid.uuid4(), 8, ""),
+         (uuid.uuid4(), 12, ""), (uuid.uuid4(), 48, ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
 
-        ((2, "Хорошева Евгения Онеговна", "староста"), ("", "", ""), ("", "", ""), (uuid.uuid4(), "Н", ""),
-         (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+        ((2, "Хорошева Евгения Онеговна", "староста"), ("", "", ""), ("", "", ""), (uuid.uuid4(), "7", ""),
+         (uuid.uuid4(), 9, ""),
+         (uuid.uuid4(), 14, ""), (uuid.uuid4(), 65, ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
 
-        ((3, "Земляникина Полина Ахметовна", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "У", ""),
-         (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+        ((3, "Земляникина Полина Ахметовна", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "9", ""),
+         (uuid.uuid4(), 4, ""),
+         (uuid.uuid4(), 12, ""), (uuid.uuid4(), 91, ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
 
-        ((4, "Ежегодов Дмитрий Сергеевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "Б", ""),
-         (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
+        ((4, "Ежегодов Дмитрий Сергеевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "10", ""),
+         (uuid.uuid4(), 5, ""),
+         (uuid.uuid4(), 16, ""), (uuid.uuid4(), 75, ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
          (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""))
     )
-    return headings, data
-
-
-
+    return headings, data, count_of_works, count_of_practical_classes, count_of_all_classes, count_of_discipline_points, count_of_points_for_three, count_of_points_for_four, count_of_points_for_five
 
 
 def get_column_index_for_highlighting(headings):
@@ -134,7 +140,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/start-journal', methods=('GET', 'POST'))
+@app.route('/start_journal', methods=('GET', 'POST'))
 def start_journal():
     headings = get_visits_data_from_db()[0]
 
@@ -163,8 +169,8 @@ def start_journal():
                 return redirect(url_for('show_journal'))
 
 
-@app.route('/journal/insert/<int:day_index>', methods=('GET', 'POST'))
-def insert_to_journal(day_index):
+@app.route('/journal/insert', methods=('GET', 'POST'))
+def insert_to_journal():
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     headings, data = get_visits_data_from_db()
     truncated_headings = (headings[0], headings[index])
@@ -177,7 +183,7 @@ def insert_to_journal(day_index):
     else:
 
         return render_template('insert_to_journal.html',
-                               index=day_index,
+                               index=index,
                                headings=truncated_headings,
                                data=tuple(truncated_data),
                                journal_group=journal_group,
@@ -257,7 +263,8 @@ def check_students_work(works_id):
 
 @app.route('/journal/attestation')
 def show_attestation():
-    headings, data = get_attestation_data_from_db()
+    headings, data, count_of_works, count_of_practical_classes, count_of_all_classes, count_of_discipline_points, \
+    count_of_points_for_three, count_of_points_for_four, count_of_points_for_five = get_attestation_data_from_db()
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     if journal_group == '':
         return redirect(url_for('start_journal'))
@@ -265,6 +272,13 @@ def show_attestation():
         return render_template('journal_attestation.html',
                                headings=headings,
                                data=data,
+                               count_of_works=count_of_works,
+                               count_of_practical_classes=count_of_practical_classes,
+                               count_of_all_classes=count_of_all_classes,
+                               count_of_discipline_points=count_of_discipline_points,
+                               count_of_points_for_three=count_of_points_for_three,
+                               count_of_points_for_four=count_of_points_for_four,
+                               count_of_points_for_five=count_of_points_for_five,
                                journal_group=journal_group,
                                journal_sem=journal_sem,
                                journal_disp=journal_disp)
