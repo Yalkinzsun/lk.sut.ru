@@ -1,0 +1,118 @@
+{% extends "start_journal.html" %}
+
+{% block content %}
+<div style="height:100%">
+<!--<div class="journal_menu">-->
+<!--    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">-->
+<!--        <li><a href="#">Посещаемость</a></li>-->
+<!--        <li><a id="active" href="#">Работы </a></li>-->
+<!--        <li><a href="#">Статистика</a></li>-->
+<!--        <li><a href="#">Аттестация+</a></li>-->
+<!--        <li><a href="#">Содержание дисциплины</a></li>-->
+<!--        <li><a href="#">Ведомости</a></li>-->
+<!--    </ul>-->
+<!--    &lt;!&ndash;<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">-->
+<!--        <li><a href="#">Состояние аудиторий</a></li>-->
+<!--        <li><a href="#">Замена ППС (на сегодня)</a></li>-->
+<!--        <li><a href="#">Инструкции</a></li>-->
+<!--            <li>-->
+<!--        <div class="btn-group new">-->
+<!--      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--        Дополнительно-->
+<!--      </button>-->
+
+<!--      <div class="dropdown-menu">-->
+<!--        <a class="dropdown-item" href="#">Дополнительно</a>-->
+<!--        <a class="dropdown-item" href="#">Another action</a>-->
+<!--        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--        <div class="dropdown-divider"></div>-->
+<!--        <a class="dropdown-item" href="#">Separated link</a>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--           </li>-->
+<!--    </ul> &ndash;&gt;-->
+<!--</div>-->
+
+<div style="padding-left:10px; padding-right:10px; padding-top: 25px; height: 90%; width: 100%; display:flex; flex-direction: row;">
+  <div  style="margin-left:10px; width: 70%;">
+    <a href="#" class="btn btn-primary btn-md" role="button" aria-pressed="false" style="color:black; background-color: white; border-color: black;"><img style="margin-bottom:2px; height:15px; width:15px" src="/static/img/plus_icon.svg"> Добавить задание</a>
+
+    {% for task in data %}
+    <div class="card" style=" width: 70%; margin-top: 25px">
+       <div class="card-body">
+           <div style="width: 100%; display:flex;">
+             <div style="width: 80%">
+             <h5 class="card-title">{{task[1]}}</h5>
+              </div>
+               <div style="display:flex; justify-content: right; align-items: center; width: 20%">
+               <img src="/static/img/eye_icon.svg" style="width:22px; height: 22px; margin-bottom: 0px; margin-right: 15px" alt="">
+                   <a href="#" style="text-decoration:none; color:grey"> <img src="/static/img/edit_icon_dark_grey.svg" style="width:22px; height: 22px; margin-bottom: 5px; margin-right: 15px" alt=""></a>
+               </div>
+           </div>
+           <div>
+           {{task[2]}}
+               </div>
+           <div style="display:flex; margin-top:15px">
+           <p style="color: grey; margin-right: 10px">Срок сдачи:</p> <p>{{ task[4] }}</p> <p style="margin-left: 30px">осталось дней:</p><p style="margin-left: 10px; color: #F6941E; font-weight:bold">{{task[5]}}</p>
+           </div>
+           <div style="display:flex;">
+           <p style="color: grey; margin-right: 10px">Макс. кол-во баллов:</p> <p> {{task[6]}} </p>
+           </div>
+
+          {% if task[7] != () %}
+
+               <div style=" display:flex; margin-top: 15px">
+               {% for file in task[7] %}
+                   {% set filename = file[::-1] %}
+                   {% set pos = filename.find('.') %}
+                   {% set part = filename[:pos] %}
+                   {% set extension = part[::-1] %}
+
+                   <div style="width: 100px">
+                   <p style="white-space: nowrap;overflow: hidden;padding: 5px; text-overflow: ellipsis; ">  <a href="/static/students works/{{file}}" style="" download>
+
+                   {% if extension in ['jpg', 'png', 'jpeg', 'svg'] %}
+                   <img src="/static/img/img_icon.svg" style="width: 80px" alt="">
+                   {% elif extension == 'pdf' %}
+                   <img src="/static/img/pdf_icon.svg" style="width: 80px" alt="">
+
+                       {% elif extension == 'zip' %}
+                   <img src="/static/img/zip_icon.svg" style="width: 80px" alt="">
+
+                        {% elif extension in ['doc', 'docx', 'txt'] %}
+                   <img src="/static/img/text_icon.svg" style="width: 80px" alt="">
+
+                       {% else  %}
+                   <img src="/static/img/file_icon.svg" style="width: 80px" alt="">
+                   {% endif %}
+                   <br> {{file}} </a></p>
+                   </div>
+
+               {% endfor %}
+
+               </div>
+
+           {% endif %}
+      </div>
+
+
+    </div>
+    {% endfor %}
+
+<br><br>
+
+  </div>
+
+
+  <div  style="width:30%;">
+ <div  style="margin-left:0px;">
+    <a href="#" class="btn btn-primary btn-md" role="button"  style="color:black; background-color: white; border-color: black"><img style="margin-bottom:2px; height:20px; width:20px" src="/static/img/settings_icon.svg"> Настройки курса</a>
+  </div>
+
+ </div>
+
+
+</div>
+
+</div>
+{% endblock %}

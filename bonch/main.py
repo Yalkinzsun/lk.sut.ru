@@ -122,6 +122,14 @@ def get_attestation_data_from_db():
     return headings, data, count_of_works, count_of_practical_classes, count_of_all_classes, count_of_discipline_points, count_of_points_for_three, count_of_points_for_four, count_of_points_for_five
 
 
+def get_course_data_from_db():
+
+    data = (
+        ('task_id', 'Задание 1', 'Постановка задачи (опционально)', '01.09.22', '14.09.22', '10', '15', ('12_09_2013_8_b.jpg', 'IST032m pr1.pdf', 'python_file.py', 'ЛР2 Nginx (p.1) Скоробогатов КД ИСТ-032м.docx', 'Эссе бд.zip')),
+        ('task_id', 'Задание 2', 'Постановка задачи (опционально)', '01.09.22', '14.09.22', '10', '15', ()),
+    )
+    return data
+
 def get_column_index_for_highlighting(headings):
     today = date.today()
 
@@ -256,6 +264,22 @@ def check_students_work(works_id):
                                comment=comment,
                                time_of_comment=time_of_comment,
                                next_work_id=next_work_id,
+                               journal_group=journal_group,
+                               journal_sem=journal_sem,
+                               journal_disp=journal_disp)
+
+
+@app.route('/journal/course')
+def show_course_materials():
+    journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
+    data = get_course_data_from_db()
+
+    if journal_group == '':
+        return redirect(url_for('start_journal'))
+    else:
+
+        return render_template('course.html',
+                               data=data,
                                journal_group=journal_group,
                                journal_sem=journal_sem,
                                journal_disp=journal_disp)
