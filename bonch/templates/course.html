@@ -2,37 +2,27 @@
 
 {% block content %}
 <div style="height:100%">
-<!--<div class="journal_menu">-->
-<!--    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">-->
-<!--        <li><a href="#">Посещаемость</a></li>-->
-<!--        <li><a id="active" href="#">Работы </a></li>-->
-<!--        <li><a href="#">Статистика</a></li>-->
-<!--        <li><a href="#">Аттестация+</a></li>-->
-<!--        <li><a href="#">Содержание дисциплины</a></li>-->
-<!--        <li><a href="#">Ведомости</a></li>-->
-<!--    </ul>-->
-<!--    &lt;!&ndash;<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">-->
-<!--        <li><a href="#">Состояние аудиторий</a></li>-->
-<!--        <li><a href="#">Замена ППС (на сегодня)</a></li>-->
-<!--        <li><a href="#">Инструкции</a></li>-->
-<!--            <li>-->
-<!--        <div class="btn-group new">-->
-<!--      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--        Дополнительно-->
-<!--      </button>-->
 
-<!--      <div class="dropdown-menu">-->
-<!--        <a class="dropdown-item" href="#">Дополнительно</a>-->
-<!--        <a class="dropdown-item" href="#">Another action</a>-->
-<!--        <a class="dropdown-item" href="#">Something else here</a>-->
-<!--        <div class="dropdown-divider"></div>-->
-<!--        <a class="dropdown-item" href="#">Separated link</a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--           </li>-->
-<!--    </ul> &ndash;&gt;-->
-<!--</div>-->
-
+<div class="journal_menu">
+    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+        <li style="margin-top:5px"><a href="{{url_for('show_journal')}}">Посещаемость</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('students_works')}}">Работы </a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_statistic')}}">Статистика</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_attestation')}}">Аттестация</a></li>
+        <li style="margin-top:5px"><a id="active" href="{{url_for('show_course_materials')}}">Содержание дисциплины</a></li>
+        <li>
+            <div class="form-group">
+                <select name="journal_more" class="custom-select mx-sm-1" id="journal_disp" style="color:black; border-radius: 50px; background-color:white"> <!-- #FEEFDD -->
+                    <option selected>Выбрать</option>
+                    <option value="Ведомости">Ведомости</option>
+                    <option value="Програмная инженерия">Сост. аудиторий</option>
+                    <option value="Програмная инженерия">Инструкция</option>
+                    <option value="Програмная инженерия">Замена ППС (на сегодня)</option>
+                </select>
+            </div>
+        </li>
+    </ul>
+</div>
 <div style="padding-left:10px; padding-right:10px; padding-top: 25px; height: 90%; width: 100%; display:flex; flex-direction: row;">
   <div  style="margin-left:10px; width: 70%;">
     <a href="#" class="btn btn-primary btn-md" role="button" aria-pressed="false" style="color:black; background-color: white; border-color: black;"><img style="margin-bottom:2px; height:15px; width:15px" src="/static/img/plus_icon.svg"> Добавить задание</a>
@@ -46,7 +36,7 @@
               </div>
                <div style="display:flex; justify-content: right; align-items: center; width: 20%">
                <img src="/static/img/eye_icon.svg" style="width:22px; height: 22px; margin-bottom: 0px; margin-right: 15px" alt="">
-                   <a href="#" style="text-decoration:none; color:grey"> <img src="/static/img/edit_icon_dark_grey.svg" style="width:22px; height: 22px; margin-bottom: 5px; margin-right: 15px" alt=""></a>
+                   <a href="{{url_for('show_course_task_materials', task_id=task[0])}}" style="text-decoration:none; color:grey"> <img src="/static/img/edit_icon_dark_grey.svg" style="width:22px; height: 22px; margin-bottom: 5px; margin-right: 15px" alt=""></a>
                </div>
            </div>
            <div>

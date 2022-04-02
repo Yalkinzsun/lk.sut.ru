@@ -5,33 +5,23 @@
 <form id="my_form" method="POST" action="/start_journal"></form>
 <div class="journal_menu">
     <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li><a id="active" href="#">Посещаемость</a></li>
-        <li><a href="#">Работы </a></li>
-        <li><a href="#">Статистика</a></li>
-        <li><a href="#">Аттестация+</a></li>
-        <li><a href="#">Содержание дисциплины</a></li>
-        <li><a href="#">Ведомости</a></li>
+        <li style="margin-top:5px"><a id="active" href="{{url_for('show_journal')}}">Посещаемость</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('students_works')}}">Работы </a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_statistic')}}">Статистика</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_attestation')}}">Аттестация</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_course_materials')}}">Содержание дисциплины</a></li>
+        <li>
+            <div class="form-group">
+                <select name="journal_more" class="custom-select mx-sm-1" id="journal_disp" style="color:black; border-radius: 50px; background-color:white"> <!-- #FEEFDD -->
+                    <option selected>Выбрать</option>
+                    <option value="Ведомости">Ведомости</option>
+                    <option value="Програмная инженерия">Сост. аудиторий</option>
+                    <option value="Програмная инженерия">Инструкция</option>
+                    <option value="Програмная инженерия">Замена ППС (на сегодня)</option>
+                </select>
+            </div>
+        </li>
     </ul>
-    <!--<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li><a href="#">Состояние аудиторий</a></li>
-        <li><a href="#">Замена ППС (на сегодня)</a></li>
-        <li><a href="#">Инструкции</a></li>
-            <li>
-        <div class="btn-group new">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Дополнительно
-      </button>
-
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Дополнительно</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a>
-      </div>
-    </div>
-           </li>
-    </ul> -->
 </div>
 <div class="table_area">
         <table align=left class="table table-bordered">

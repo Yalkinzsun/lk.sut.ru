@@ -1,0 +1,162 @@
+{% extends "start_journal.html" %}
+
+{% block content %}
+<div style="height:100%">
+    <!--<div class="journal_menu">-->
+    <!--    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">-->
+    <!--        <li><a href="#">Посещаемость</a></li>-->
+    <!--        <li><a id="active" href="#">Работы </a></li>-->
+    <!--        <li><a href="#">Статистика</a></li>-->
+    <!--        <li><a href="#">Аттестация+</a></li>-->
+    <!--        <li><a href="#">Содержание дисциплины</a></li>-->
+    <!--        <li><a href="#">Ведомости</a></li>-->
+    <!--    </ul>-->
+    <!--    &lt;!&ndash;<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">-->
+    <!--        <li><a href="#">Состояние аудиторий</a></li>-->
+    <!--        <li><a href="#">Замена ППС (на сегодня)</a></li>-->
+    <!--        <li><a href="#">Инструкции</a></li>-->
+    <!--            <li>-->
+    <!--        <div class="btn-group new">-->
+    <!--      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+    <!--        Дополнительно-->
+    <!--      </button>-->
+
+    <!--      <div class="dropdown-menu">-->
+    <!--        <a class="dropdown-item" href="#">Дополнительно</a>-->
+    <!--        <a class="dropdown-item" href="#">Another action</a>-->
+    <!--        <a class="dropdown-item" href="#">Something else here</a>-->
+    <!--        <div class="dropdown-divider"></div>-->
+    <!--        <a class="dropdown-item" href="#">Separated link</a>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--           </li>-->
+    <!--    </ul> &ndash;&gt;-->
+    <!--</div>-->
+
+    <div style="padding-left:10px; padding-right:10px; padding-top: 25px; height: 90%; width: 100%; display:flex; flex-direction: row;">
+
+        <div style="margin-left:10px; width: 55%; margin-bottom: 35px">
+            <p style="font-size: 18px; color: grey; margin-bottom:5px">Материалы курса</p>
+            <h2>{{journal_disp}}</h2>
+            <br>
+            <form id="form_selected_course_task" method="post">
+                <div class="form-group">
+                    <label for="task_name" style="color:grey; font-size:18px">Название задания</label>
+                    <input type="text" class="form-control" id="task_name"
+                           value="{{selected_task[1]}}" style="color:black;font-size:18px" required>
+                </div>
+                <div class="form-group">
+                    <label for="task_visibility" style="color:grey; font-size:18px">Видимость задания для студентов</label>
+                    <select class="form-control" id="task_visibility" style="color:black;font-size:18px" required>
+
+                        {% if selected_task[8] == 1 %}
+                        <option selected>Видно</option>
+                        <option>Не видно</option>
+                        {% elif selected_task[8] == 0 %}
+                        <option selected>Не видно</option>
+                        <option>Видно</option>
+                        {% else %}
+                        <option selected>Выбрать</option>
+                        <option>Видно</option>
+                        <option>Не видно</option>
+                        {% endif %}
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task_description" style="color:grey; font-size:18px">Формулировка
+                        задания</label>
+                    <textarea class="form-control" id="task_description" rows="3"
+                              style="color:black;font-size:18px" required> {{selected_task[2]}}</textarea>
+                </div>
+
+                <div class="form-group">
+                    {% set day, month, year = selected_task[3].split(".") %}
+                    {% set formatted_date = "-".join([year,month,day]) %}
+                    <label for="first_dp" style="color:grey; font-size:18px">Дата постановки задачи</label>
+                    <input type="date" class="form-control" id="first_dp" multiple="multiple"
+                           style="color:black;font-size:18px" value="{{formatted_date}}" readonly>
+                </div>
+                <div class="form-group">
+                    {% set day, month, year = selected_task[4].split(".") %}
+                    {% set formatted_date = "-".join([year,month,day]) %}
+                    <label for="dp" style="color:grey; font-size:18px">Дата здачи задания</label>
+                    <input type="date" class="form-control" id="dp" multiple="multiple"
+                           style="color:black;font-size:18px" value="{{formatted_date}}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="task_number_of_points" style="color:grey; font-size:18px">Количество баллов за
+                        задание</label>
+                    <input type="number" class="form-control" id="task_number_of_points"
+                           value="{{selected_task[6]}}" style="color:black;font-size:18px" required>
+                </div>
+                <div class="form-group">
+                    <label for="task_add_file" style="color:grey; font-size:18px">Добавление файлов
+                        задания (макс. 5шт.)</label>
+                    <input type="file" class="form-control-file" id="task_add_file" multiple="multiple"
+                           style="color:black;font-size:18px" required>
+                     <small id="task_add_fil" class="form-text text-muted" style="font-size: 16px">Список допустимых расширений файлов</small>
+                </div>
+                  <div style=" display:flex; margin-top: 15px">
+               {% for file in selected_task[7] %}
+                   {% set filename = file[::-1] %}
+                   {% set pos = filename.find('.') %}
+                   {% set part = filename[:pos] %}
+                   {% set extension = part[::-1] %}
+
+                   <div style="width: 100px">
+                   <p style="white-space: nowrap;overflow: hidden;padding: 5px; text-overflow: ellipsis; ">  <a href="/static/students works/{{file}}" style="" download>
+
+                   {% if extension in ['jpg', 'png', 'jpeg', 'svg'] %}
+                   <img src="/static/img/img_icon.svg" style="width: 80px" alt="">
+                   {% elif extension == 'pdf' %}
+                   <img src="/static/img/pdf_icon.svg" style="width: 80px" alt="">
+
+                       {% elif extension == 'zip' %}
+                   <img src="/static/img/zip_icon.svg" style="width: 80px" alt="">
+
+                        {% elif extension in ['doc', 'docx', 'txt'] %}
+                   <img src="/static/img/text_icon.svg" style="width: 80px" alt="">
+
+                       {% else  %}
+                   <img src="/static/img/file_icon.svg" style="width: 80px" alt="">
+                   {% endif %}
+                   <br> {{file}} </a>
+                       <br>
+                      <a href="#" class="btn btn-outline-danger btn-sm" role="button" style="margin-top:15px">Удалить</a></p>
+                   </div>
+
+               {% endfor %}
+
+               </div>
+
+               <button form="form_selected_course_task" class="btn btn-success my-2 my-sm-0" type="submit">Готово</button>
+
+            </form>
+
+
+
+        </div>
+
+
+        <div style="width:40%;">
+
+
+        </div>
+
+        <div style="width:5%;">
+
+            <a href="{{ url_for('show_course_materials') }}">
+                <img id="close_button" style="width:24px; height:24px; margin: 0px" src="/static/img/close_icon.svg"
+                     alt="edit icon">
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -3,119 +3,126 @@
 {% block content %}
 <div class="journal_menu">
     <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li><a href="#">Посещаемость</a></li>
-        <li><a id="active" href="#">Работы </a></li>
-        <li><a href="#">Статистика</a></li>
-        <li><a href="#">Аттестация+</a></li>
-        <li><a href="#">Содержание дисциплины</a></li>
-        <li><a href="#">Ведомости</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_journal')}}">Посещаемость</a></li>
+        <li style="margin-top:5px"><a id="active" href="{{url_for('students_works')}}">Работы </a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_statistic')}}">Статистика</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_attestation')}}">Аттестация</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('show_course_materials')}}">Содержание дисциплины</a></li>
+        <li>
+            <div class="form-group">
+                <select name="journal_more" class="custom-select mx-sm-1" id="journal_disp" style="color:black; border-radius: 50px; background-color:white"> <!-- #FEEFDD -->
+                    <option selected>Выбрать</option>
+                    <option value="Ведомости">Ведомости</option>
+                    <option value="Програмная инженерия">Сост. аудиторий</option>
+                    <option value="Програмная инженерия">Инструкция</option>
+                    <option value="Програмная инженерия">Замена ППС (на сегодня)</option>
+                </select>
+            </div>
+        </li>
     </ul>
-    <!--<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li><a href="#">Состояние аудиторий</a></li>
-        <li><a href="#">Замена ППС (на сегодня)</a></li>
-        <li><a href="#">Инструкции</a></li>
-            <li>
-        <div class="btn-group new">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Дополнительно
-      </button>
-
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Дополнительно</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a>
-      </div>
-    </div>
-           </li>
-    </ul> -->
 </div>
+
 <div class="table_area">
-        <table align=left class="table table-bordered">
-            <tr class="table__header">
-                {% for header in headings %}
+    <table align=left class="table table-bordered">
+        <tr class="table__header">
+            {% for header in headings %}
 
-                {% if headings.index(header) == 0 %}
-                <th class="table__cell_fixed" style="width: 300px;height: 86px">
-                    {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
-                </th>
+            {% if headings.index(header) == 0 %}
+            <th class="table__cell_fixed" style="width: 300px;height: 86px">
+                {{header[0]}} <br>
+                <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
+            </th>
 
-                {% elif headings.index(header) == index %}
-                <th style="background-color:#FEEFDD;" class="table__cell">
-                    <div style="display:flex; justify-content: space-between;">
-                        <div>
-                    {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
-                        </div>
-
-                    </div>
-                </th>
-                {% else %}
-                <th class="table__cell" style="width:150px; height: 85px">
-                    <div style="display:flex; justify-content: space-between;">
-                        <div>
-                    {{header[0]}} <br>  <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
-                        </div>
-
-                    </div>
-                </th>
-                {% endif %}
-                {% endfor %}
-            </tr>
-
-
-            {% for row in data %}
-
-            <tr align=left class="table__row">
-                {% for cell in row %}
-
-                {% if row.index(cell) == 0 %}
-                <td class="table__cell_fixed" style="width: 300px; height: 86px">
-                       {{data.index(row) + 1}}.  {{cell[1]}}  <br> <p style="font-weight:normal; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
-                </td>
-
-                {% else %}
-                <th class="table__cell" style="width:150px; padding: 0px; height: 85px">
-
-                    {% if cell[1] == "st1" %}
-                    <div style="display:flex; align-content:center; justify-content: center;">
-                        <div>
-                    <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px;text-align:center;">ждёт оценки</p>
-                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"  style="background-color: #F6941E; color: white; border:0px; margin-top:10px; margin-bottom:10px">проверить</a>
-                        </div>
-                    </div>
-                   {% elif cell[1] == "st2" %}
-                     <div style="display:flex; align-content:center; justify-content: center;">
-                        <div>
-                    <p style="color: #28A745; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">&#10003; зачтено</p>
-                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"  style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
-                            </div>
-                    </div>
-                     {% elif cell[1] == "st3" %}
-                     <div style="display:flex; align-content:center; justify-content: center;">
-                        <div>
-                    <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">&#9998; доделать</p>
-                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"   style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
-                            </div>
-                    </div>
-                      {% elif cell[1] == "st4" %}
-                     <div style="display:flex; align-content:center; justify-content: center;">
-                        <div>
-                    <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">&#10007; переделать</p>
-                    <a href="{{ url_for('check_students_work', works_id=cell[0]) }}" class="btn btn-outline-secondary btn-sm active" role="button"   style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
-                            </div>
+            {% elif headings.index(header) == index %}
+            <th style="background-color:#FEEFDD;" class="table__cell">
+                <div style="display:flex; justify-content: space-between;">
+                    <div>
+                        {{header[0]}} <br>
+                        <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
                     </div>
 
-                    {% else %}
+                </div>
+            </th>
+            {% else %}
+            <th class="table__cell" style="width:150px; height: 85px">
+                <div style="display:flex; justify-content: space-between;">
+                    <div>
+                        {{header[0]}} <br>
+                        <p style="color:grey; margin:0px; font-weight: normal"> {{header[1]}} </p>
+                    </div>
 
-<!--                    {{data[data.index(row)][0][0]}}{{row.index(cell)}}-->
-                     {% endif %}
-                </th>
-
-                {% endif %}
-                {% endfor %}
-            </tr>
+                </div>
+            </th>
+            {% endif %}
             {% endfor %}
-        </table>
+        </tr>
+
+
+        {% for row in data %}
+
+        <tr align=left class="table__row">
+            {% for cell in row %}
+
+            {% if row.index(cell) == 0 %}
+            <td class="table__cell_fixed" style="width: 300px; height: 86px">
+                {{data.index(row) + 1}}. {{cell[1]}} <br>
+                <p style="font-weight:normal; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
+            </td>
+
+            {% else %}
+            <th class="table__cell" style="width:150px; padding: 0px; height: 85px">
+
+                {% if cell[1] == "st1" %}
+                <div style="display:flex; align-content:center; justify-content: center;">
+                    <div>
+                        <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px;text-align:center;">
+                            ждёт оценки</p>
+                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                           class="btn btn-outline-secondary btn-sm active" role="button"
+                           style="background-color: #F6941E; color: white; border:0px; margin-top:10px; margin-bottom:10px">проверить</a>
+                    </div>
+                </div>
+                {% elif cell[1] == "st2" %}
+                <div style="display:flex; align-content:center; justify-content: center;">
+                    <div>
+                        <p style="color: #28A745; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">
+                            &#10003; зачтено</p>
+                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                           class="btn btn-outline-secondary btn-sm active" role="button"
+                           style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
+                    </div>
+                </div>
+                {% elif cell[1] == "st3" %}
+                <div style="display:flex; align-content:center; justify-content: center;">
+                    <div>
+                        <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">
+                            &#9998; доделать</p>
+                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                           class="btn btn-outline-secondary btn-sm active" role="button"
+                           style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
+                    </div>
+                </div>
+                {% elif cell[1] == "st4" %}
+                <div style="display:flex; align-content:center; justify-content: center;">
+                    <div>
+                        <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">
+                            &#10007; переделать</p>
+                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                           class="btn btn-outline-secondary btn-sm active" role="button"
+                           style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
+                    </div>
+                </div>
+
+                {% else %}
+
+                <!--                    {{data[data.index(row)][0][0]}}{{row.index(cell)}}-->
+                {% endif %}
+            </th>
+
+            {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}

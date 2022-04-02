@@ -12,7 +12,7 @@
     html {
     position: relative;
     min-height: 100%;
-    background-color: #F5F7F9;
+    background-color: #white;
     }
     .journal_menu {
     padding-top: 10px;
@@ -64,7 +64,7 @@
 
     .table__cell {
     height: 70px;
-    width: 145px;
+    width: 165px;
     }
 
 
@@ -72,7 +72,7 @@
     margin-top:-1px;
     margin-left:-1px;
 
-    width: 291px;
+    width: 330px;
     height: 71px;
     background-color:white;
     position: absolute;
@@ -121,37 +121,41 @@
 }
 }
 
+
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg fixed-top bg-light">
 
 
-   <div class="dropdown" style="margin-right: 10px">
-  <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown"  aria-expanded="false" style="background-color: #F5F7F9; padding: 2px; border-radius:8px">
-    <img style="width: 32px; height: 32px" src="/static/img/menu_icon.svg" alt="menu icon">
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <p style="margin-left:25px;padding-right:10px; margin-bottom: 0px; font-size: 14px; color:grey">ТЕКСТ РАЗДЕЛИТЕЛЯ</p>
-    <a class="dropdown-item" href="#" >Действие</a>
-    <a class="dropdown-item" href="#" >Другое действие</a>
-    <a class="dropdown-item" href="#" >Что-то еще здесь</a>
-  </div>
-</div>
+    <div class="dropdown" style="margin-right: 10px">
+        <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-expanded="false" style="background-color: #F5F7F9; padding: 2px; border-radius:8px">
+            <img style="width: 32px; height: 32px" src="/static/img/menu_icon.svg" alt="menu icon">
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <p style="margin-left:25px;padding-right:10px; margin-bottom: 0px; font-size: 14px; color:grey">ТЕКСТ
+                РАЗДЕЛИТЕЛЯ</p>
+            <a class="dropdown-item" href="#">Действие</a>
+            <a class="dropdown-item" href="#">Другое действие</a>
+            <a class="dropdown-item" href="#">Что-то еще здесь</a>
+        </div>
+    </div>
 
-    <img src="/static/img/logo_icon.svg" alt="small sut logo icon" style="width: 38px; height: 38px; border-radius:8px; margin-right: 10px">
+    <img src="/static/img/logo_icon.svg" alt="small sut logo icon"
+         style="width: 38px; height: 38px; border-radius:8px; margin-right: 10px">
 
     <a style="color:black; font-weight:bold" class="navbar-brand" href="#">Журнал</a>
-<!--    <button-->
-<!--            class="navbar-toggler"-->
-<!--            type="button"-->
-<!--            data-toggle="collapse"-->
-<!--            data-target="#navbarCollapse"-->
-<!--            aria-controls="navbarCollapse"-->
-<!--            aria-expanded="false"-->
-<!--            aria-label="Toggle navigation">-->
-<!--        <span class="navbar-toggler-icon"></span>-->
-<!--    </button>-->
+    <!--    <button-->
+    <!--            class="navbar-toggler"-->
+    <!--            type="button"-->
+    <!--            data-toggle="collapse"-->
+    <!--            data-target="#navbarCollapse"-->
+    <!--            aria-controls="navbarCollapse"-->
+    <!--            aria-expanded="false"-->
+    <!--            aria-label="Toggle navigation">-->
+    <!--        <span class="navbar-toggler-icon"></span>-->
+    <!--    </button>-->
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
 
@@ -207,41 +211,41 @@
 
 <!--  <div class="container-fluid"> -->
 <div style="height:100%">
-{% block content %}
+    {% block content %}
 
-{% if show_table %}
-<form id="my_form" method="POST" action="/start_journal"></form>
-<div class="journal_menu">
-    <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li><a id="active" href="#">Посещаемость</a></li>
-        <li><a href="#">Работы </a></li>
-        <li><a href="#">Статистика</a></li>
-        <li><a href="#">Аттестация+</a></li>
-        <li><a href="#">Содержание дисциплины</a></li>
-        <li><a href="#">Ведомости</a></li>
-    </ul>
-    <!--<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li><a href="#">Состояние аудиторий</a></li>
-        <li><a href="#">Замена ППС (на сегодня)</a></li>
-        <li><a href="#">Инструкции</a></li>
-            <li>
-        <div class="btn-group new">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Дополнительно
-      </button>
+    {% if show_table %}
+    <form id="my_form" method="POST" action="/start_journal"></form>
+    <div class="journal_menu">
+        <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+            <li><a id="active" href="#">Посещаемость</a></li>
+            <li><a href="#">Работы </a></li>
+            <li><a href="#">Статистика</a></li>
+            <li><a href="#">Аттестация+</a></li>
+            <li><a href="#">Содержание дисциплины</a></li>
+            <li><a href="#">Ведомости</a></li>
+        </ul>
+        <!--<ul id="menu_p2" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
+            <li><a href="#">Состояние аудиторий</a></li>
+            <li><a href="#">Замена ППС (на сегодня)</a></li>
+            <li><a href="#">Инструкции</a></li>
+                <li>
+            <div class="btn-group new">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Дополнительно
+          </button>
 
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Дополнительно</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a>
-      </div>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Дополнительно</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </div>
+               </li>
+        </ul> -->
     </div>
-           </li>
-    </ul> -->
-</div>
-<div class="table_area">
+    <div class="table_area">
         <table align=left class="table table-bordered">
             <tr class="table__header">
                 {% for header in headings %}
@@ -258,7 +262,7 @@
 
 
             {% for row in data %}
-<!--            {% print(row) %}-->
+            <!--            {% print(row) %}-->
             <tr align=left class="table__row">
                 {% for cell in row %}
 
@@ -266,28 +270,30 @@
                 <td class="table__cell_fixed">{{cell}}</td>
 
 
-
-
                 {% elif row.index(cell) == selected_day and inserting %}
 
                 <th style="background-color:#FEEFDD; width:350px;">
 
                     <div class="boxed">
-                       <label style="margin-left: 10px; margin-right:20px; border: 0px;">100%</label>
-                       <input type="radio" id="be{{data.index(row)}}" name="{{data.index(row)}}" value="П{{data.index(row)}}" form="my_form">
-                       <label style="margin-right:10px" for="be{{data.index(row)}}">П</label>
+                        <label style="margin-left: 10px; margin-right:20px; border: 0px;">100%</label>
+                        <input type="radio" id="be{{data.index(row)}}" name="{{data.index(row)}}"
+                               value="П{{data.index(row)}}" form="my_form">
+                        <label style="margin-right:10px" for="be{{data.index(row)}}">П</label>
 
-                       <input type="radio" id="absent_without_a_valid_reason{{data.index(row)}}" name="{{data.index(row)}}" value="Н{{data.index(row)}}" form="my_form">
-                       <label for="absent_without_a_valid_reason{{data.index(row)}}">Н</label>
+                        <input type="radio" id="absent_without_a_valid_reason{{data.index(row)}}"
+                               name="{{data.index(row)}}" value="Н{{data.index(row)}}" form="my_form">
+                        <label for="absent_without_a_valid_reason{{data.index(row)}}">Н</label>
 
-                        <input type="radio" id="ill{{data.index(row)}}" name="{{data.index(row)}}" value="Б{{data.index(row)}}" form="my_form">
-                       <label for="ill{{data.index(row)}}">Б</label>
+                        <input type="radio" id="ill{{data.index(row)}}" name="{{data.index(row)}}"
+                               value="Б{{data.index(row)}}" form="my_form">
+                        <label for="ill{{data.index(row)}}">Б</label>
 
-                        <input type="radio" id="absent_with_a_good_reason{{data.index(row)}}" name="{{data.index(row)}}" value="У{{data.index(row)}}" form="my_form">
-                       <label style="margin-right:10px" for="absent_with_a_good_reason{{data.index(row)}}">У</label>
+                        <input type="radio" id="absent_with_a_good_reason{{data.index(row)}}" name="{{data.index(row)}}"
+                               value="У{{data.index(row)}}" form="my_form">
+                        <label style="margin-right:10px" for="absent_with_a_good_reason{{data.index(row)}}">У</label>
 
-                        <input type="text" id="mark{{data.index(row)}}" name="mark"  form="my_form">
-<!--                        placeholder="Оценка"-->
+                        <input type="text" id="mark{{data.index(row)}}" name="mark" form="my_form">
+                        <!--                        placeholder="Оценка"-->
 
 
                     </div>
@@ -310,13 +316,14 @@
             {% endfor %}
         </table>
 
-</div>
-<button form="my_form" class="btn btn-outline-success my-2 my-sm-0" type="submit">Подписать</button>
-{% else %}
-<div style="display:flex; align-content:center; justify-content: center; height: 250px"><p style="font-size:18px; font-weight: bold; margin-top: 100px">Выберите группу, семестр и дисциплину</p></div>
-{% endif %}
+    </div>
+    <button form="my_form" class="btn btn-outline-success my-2 my-sm-0" type="submit">Подписать</button>
+    {% else %}
+    <div style="display:flex; align-content:center; justify-content: center; height: 250px"><p
+            style="font-size:18px; font-weight: bold; margin-top: 100px">Выберите группу, семестр и дисциплину</p></div>
+    {% endif %}
 
-{% endblock %}
+    {% endblock %}
 
 </div>
 <!--
@@ -338,6 +345,24 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+
+<!-- D3.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script type="text/javascript">
+        var graphs = {{graphJSON | safe}};
+        var ids = {{ids | safe}};
+        for(var i in graphs) {
+            Plotly.plot(ids[i],
+                        graphs[i].data,
+                        graphs[i].layout || {});
+        }
+
+</script>
 <script>
 $(document).ready(function() {
   $('.nav-link-collapse').on('click', function() {
@@ -345,6 +370,7 @@ $(document).ready(function() {
     $(this).toggleClass('nav-link-show');
   });
 });
+
 </script>
 <script>
 $(document).ready(function() {
@@ -357,6 +383,7 @@ $(document).ready(function() {
         clickedItem.addClass( "active" );
     });
 });
+
 
 
 
