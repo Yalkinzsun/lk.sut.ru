@@ -3,9 +3,12 @@ from flask import render_template, request, url_for, flash, redirect, session
 
 from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
+
+from DB.database import get_visits_data_from_db, insert_visits_data_to_db
 from bonch import app
 import sqlite3
 import sys
+import random
 import uuid
 from scipy import stats
 import json
@@ -32,34 +35,6 @@ def get_data_from_session_if_possible():
         day_index_in_headings = session['day_index_in_headings']
 
     return journal_group, journal_sem, journal_disp, day_index_in_headings
-
-
-def get_visits_data_from_db():
-    headings = (("Студент", ""), ("", ""), ("", ""), ("Практика 1", "01.09", "00:00-01:35", "Громов В.В."), ("Лекция 1", "01.09", "00:00-01:35", "Аборздинский В.В."),
-                ("Практика 2", "01.09","00:00-01:35", "Громов В.В."), ("Лекция 2", "01.09", "00:00-01:35", "Аборздинский В.В."), ("Практика 3", "01.09", "00:00-01:35", "Громов В.В."),
-                ("Лекция 3", "01.09", "00:00-01:35", "Аборздинский В.В."), ("Практика 4", "01.09", "00:00-01:35", "Громов В.В."), ("Лекция 4", "01.09", "00:00-01:35", "Аборздинский В.В."))
-    data = (
-        ((1, "Хабельников Никита Андреевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "Б", "8"),
-         (uuid.uuid4(), "Б", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
-
-        ((2, "Хорошева Евгения Онеговна", "староста"), ("", "", ""), ("", "", ""), (uuid.uuid4(), "Н", ""),
-         (uuid.uuid4(), "Б", "8"),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
-
-        ((3, "Земляникина Полина Ахметовна", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "У", ""),
-         (uuid.uuid4(), "У", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", "")),
-
-        ((4, "Ежегодов Дмитрий Сергеевич", ""), ("", "", ""), ("", "", ""), (uuid.uuid4(), "Б", "6"),
-         (uuid.uuid4(), "Н", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""),
-         (uuid.uuid4(), "", ""), (uuid.uuid4(), "", ""))
-    )
-    return headings, data
 
 
 def get_works_data_from_db():
@@ -161,9 +136,9 @@ def get_column_index_for_highlighting(headings):
     today = date.today()
 
     if today.strftime("%d.%m.%Y") in headings:
-        return 4
+        return 0
     else:
-        return 5
+        return 6
 
 
 def is_it_necessary_to_insert(column_index):
@@ -177,7 +152,7 @@ def index():
 
 @app.route('/start_journal', methods=('GET', 'POST'))
 def start_journal():
-    headings = get_visits_data_from_db()[0]
+    headings = get_visits_data_from_db(20200322)[0]
 
     if request.method == 'POST':
         session['journal_group'] = request.form['journal_group']
@@ -207,7 +182,7 @@ def start_journal():
 @app.route('/journal/insert', methods=('GET', 'POST'))
 def insert_to_journal():
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
-    headings, data = get_visits_data_from_db()
+    headings, data = get_visits_data_from_db(20200322)
     truncated_headings = (headings[0], headings[index])
     truncated_data = []
     for row in data:
@@ -216,6 +191,32 @@ def insert_to_journal():
     if journal_group == '':
         return redirect(url_for('start_journal'))
     else:
+        if request.method == 'POST':
+            visits_data = []
+            id_statement = random.randint(45, 5125)
+            id_teacher = 1
+            id_class = 4
+            for i in range(len(data)):
+
+                status = request.form.get(str(i)),
+                mark = request.form.get(f"mark{i}")
+                if mark == "":
+                    mark = 0
+
+                visits_data.append([
+                    id_statement,
+                    i+1,
+                    id_teacher,
+                    id_class,
+                    str(status)[2],
+                    mark
+                ])
+
+
+            insert_visits_data_to_db(visits_data)
+
+            return redirect(url_for('show_journal'))
+
 
         return render_template('insert_to_journal.html',
                                index=index,
@@ -229,7 +230,7 @@ def insert_to_journal():
 
 @app.route('/journal')
 def show_journal():
-    headings, data = get_visits_data_from_db()
+    headings, data = get_visits_data_from_db(20200322)
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     if journal_group == '':
         return redirect(url_for('start_journal'))

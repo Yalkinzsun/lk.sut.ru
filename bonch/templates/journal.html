@@ -65,7 +65,7 @@
                         <img src="/static/img/edit_icon_orange.svg" alt="edit icon">
                     </a>
                     {% else %}
-                    <a href="{{ url_for('insert_to_journal', index=headings.index(header)) }}">
+                    <a href="{{ url_for('insert_to_journal', day_index=headings.index(header)) }}">
                         <img src="/static/img/edit_icon.svg" alt="edit icon">
                     </a>
                     {% endif %}
@@ -110,7 +110,11 @@
             {% if row.index(cell) == 0 %}
             <td class="table__cell_fixed">
                 {{cell[0]}}. {{cell[1]}} <br>
-                <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
+                <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;
+                    {% if cell[2] == '1' %}
+                    староста
+                     {% endif %}
+                </p>
             </td>
 
 
@@ -124,8 +128,10 @@
                 </div>
                 {% else %}
                 <div style="display: flex">
-                    <p>{{cell[1]}},</p>
+                    <p>{{cell[1]}}</p>
+                    {% if cell[2] != '0' %}
                     <p style="font-weight: normal; margin-left: 10px">{{cell[2]}}</p>
+                    {% endif %}
                 </div>
                 {% endif %}
 
@@ -140,8 +146,10 @@
                 </div>
                 {% else %}
                 <div style="display: flex">
-                    <p>{{cell[1]}},</p>
+                    <p>{{cell[1]}}</p>
+                    {% if cell[2] != '0' %}
                     <p style="font-weight: normal; margin-left: 10px">{{cell[2]}}</p>
+                    {% endif %}
                 </div>
                 {% endif %}
             </th>

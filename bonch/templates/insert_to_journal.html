@@ -75,7 +75,12 @@
             <td class="table__cell_fixed" style="width: 300px; position: sticky;">
 
                 {{cell[0]}}. {{cell[1]}} <br>
-                <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;{{cell[2]}} </p>
+                <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;
+
+                    {% if cell[2] == "1" %}
+                    староста
+                      {% endif %}
+                </p>
 
             </td>
 
@@ -87,7 +92,7 @@
                 <div class="boxed">
                     <label style="margin-left: 10px; margin-right:20px; border: 0px;">100%</label>
                     <input type="radio" id="be{{data.index(row)}}" name="{{data.index(row)}}"
-                           value="П{{data.index(row)}}" form="insert_visits">
+                           value="П{{data.index(row)}}" form="insert_visits" >
                     <label style="margin-right:10px" for="be{{data.index(row)}}">П</label>
 
                     <input type="radio" id="absent_without_a_valid_reason{{data.index(row)}}" name="{{data.index(row)}}"
@@ -102,7 +107,7 @@
                            value="У{{data.index(row)}}" form="insert_visits">
                     <label style="margin-right:10px" for="absent_with_a_good_reason{{data.index(row)}}">У</label>
 
-                    <input type="text" id="mark{{data.index(row)}}" name="mark" form="insert_visits"
+                    <input type="text" id="mark{{data.index(row)}}" name="mark{{data.index(row)}}" form="insert_visits"
                            placeholder="Оценка">
 
                 </div>
