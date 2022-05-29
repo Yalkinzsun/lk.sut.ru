@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>lk | bonch</title>
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
+    <link rel="stylesheet" type="text/css" href="/static/content/registration.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/content/registration.css"/>
+
+    <style>
+        html,
+        body {
+            background: #F6941E;
+        }
+        .notification-is-danger {
+            background: #FEA841;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-color: black;
+            font-family: Roboto;
+            font-weight: medium;
+            font-size: 16px;
+            border-radius: 15px;
+            padding-top:15px;
+            padding-bottom:15px;
+        }
+
+        .notification-is-danger a {
+           text-decoration: none;
+        }
+
+        .bg_reg {
+            /* background */
+            position: fixed;
+            width: 100%;
+            height: 100%;
+
+            background-color: #F6941E;
+        }
+
+
+
+        .discogr-logo {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+
+            position: absolute;
+            width: 60%;
+            height: 60px;
+            top: 111px;
+        }
+
+        .sign {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sign_up {
+            width: 360px;
+            height: 350px;
+            position: absolute;
+            top: 203px;
+            vertical-align: middle;
+            margin-left: -0.35em;
+
+            background: white;
+            border-radius: 20px;
+        }
+
+        .reg_title {
+            position: absolute;
+            height: 22px;
+            font-family: Inter;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 22px;
+            /* identical to box height */
+
+
+            margin-top: 35px;
+            text-align: center;
+
+            color: #171725;
+        }
+
+        div.forms {
+            position: absolute;
+            width: 360px;
+            height: 425px;
+            left: 0px;
+            top: 89px;
+        }
+
+        /* Поля для ввода */
+        .forms-in {
+            position: absolute;
+            width: 320px;
+            height: 228px;
+            left: 20px;
+            top: 0px;
+        }
+
+        .email-form {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 83.33%;
+        }
+
+        .email {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 14px;
+            text-indent: 15px;
+
+            position: absolute;
+            width: 320px;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #FAFAFB;
+            border: 1px solid #F1F1F5;
+            box-sizing: border-box;
+            border-radius: 15px;
+        }
+
+        .email:hover {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #FAFAFB;
+            border: 1px solid #F1F1F5;
+            box-sizing: border-box;
+            border-radius: 15px;
+        }
+
+        .email:focus,
+        .name:focus,
+        .password:focus {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 14px;
+            text-indent: 15px;
+
+            background: #FAFAFB;
+            border: 1px solid #F1F1F5;
+            box-sizing: border-box;
+            border-radius: 15px;
+            outline: none;
+        }
+
+        .name-form {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 23.25%;
+            bottom: 60.09%;
+        }
+
+        .name {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 14px;
+            text-indent: 15px;
+
+            position: absolute;
+            width: 320px;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #FAFAFB;
+            border: 1px solid #F1F1F5;
+            box-sizing: border-box;
+            border-radius: 15px;
+        }
+
+        .password-form {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 46.49%;
+            bottom: 36.84%;
+        }
+
+        .password {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 14px;
+            text-indent: 15px;
+
+            position: absolute;
+            width: 320px;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #FAFAFB;
+            border: 1px solid #F1F1F5;
+            box-sizing: border-box;
+            border-radius: 15px;
+        }
+
+        ::placeholder {
+            text-indent: 15px;
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: 0.1px;
+
+            color: #92929D;
+        }
+
+        input:hover {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 14px;
+
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #FAFAFB;
+            border: 1px solid #F1F1F5;
+            box-sizing: border-box;
+            border-radius: 15px;
+
+            filter: drop-shadow(0px 0px 10px rgba(146, 146, 157, 0.1));
+        }
+
+        input:active {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 14px;
+
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #FAFAFB;
+            border: 1px solid #F1F1F5;
+            box-sizing: border-box;
+            border-radius: 15px;
+
+            filter: drop-shadow(0px 0px 10px rgba(146, 146, 157, 0.1));
+        }
+
+        /* Сложность пароля */
+        .strength-pass {
+            position: absolute;
+            left: 10.78%;
+            right: 10.78%;
+            top: 69.74%;
+            bottom: 24.12%;
+        }
+
+        .indicator-pass {
+            position: absolute;
+            width: 212px;
+            height: 4px;
+            left: 0px;
+            top: 5px;
+        }
+
+        .very-low {
+            position: absolute;
+            left: 0%;
+            right: 81.13%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #E2E2EA;
+        }
+
+        .low {
+            position: absolute;
+            left: 20.28%;
+            right: 60.85%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #E2E2EA;
+            border-radius: 2.5px;
+        }
+
+        .middle {
+            position: absolute;
+            left: 40.57%;
+            right: 40.57%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #E2E2EA;
+            border-radius: 2.5px;
+        }
+
+        .high {
+            position: absolute;
+            left: 60.85%;
+            right: 20.28%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #E2E2EA;
+            border-radius: 2.5px;
+        }
+
+        .very-high {
+            position: absolute;
+            left: 81.13%;
+            right: 0%;
+            top: 0%;
+            bottom: 0%;
+
+            background: #E2E2EA;
+        }
+
+        .pass-hint {
+            position: absolute;
+            height: 14px;
+            left: 222px;
+            right: 8px;
+            top: calc(50% - 14px/2);
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 14px;
+
+            color: #92929D;
+        }
+
+        .view-icon {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            right: 15px;
+            top: calc(50% - 16px/2);
+        }
+
+        .agreement {
+            position: absolute;
+            height: 40px;
+            left: 4.22%;
+            right: 4.22%;
+            top: 175px;
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 20px;
+            /* or 167% */
+
+            text-align: center;
+
+            color: #92929D;
+
+
+            /* Inside Auto Layout */
+
+            flex: none;
+            order: 4;
+            flex-grow: 0;
+            margin: 15px 0px;
+        }
+
+        .agreement-link {
+            color: #F6941E;
+        }
+
+        .reg-buttons {
+            position: absolute;
+            width: 360px;
+            height: 177px;
+            left: 0px;
+            top: 220px;
+        }
+
+        .register {
+            position: absolute;
+            left: 5.56%;
+            right: 5.56%;
+            top: 0%;
+            bottom: 78.53%;
+            width: 320px;
+            height: 38px;
+            outline: none !important;
+
+            background-color: #F6941E;
+            color: white;
+            padding: 11px 96px;
+
+            font-family: Inter;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 15px;
+            text-align: center;
+
+            border: none;
+            box-shadow: none;
+            border-radius: 10px;
+
+        }
+
+        .register:hover {
+            position: absolute;
+            left: 5.56%;
+            right: 5.56%;
+            top: 0%;
+            bottom: 78.53%;
+            width: 320px;
+            height: 38px;
+            outline: none !important;
+
+            background: #FEA841;
+            border-radius: 10px;
+            color: white;
+            padding: 11px 96px;
+
+            font-family: Inter;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 15px;
+            text-align: center;
+
+            border: none;
+            box-shadow: none;
+            border-radius: 10px;
+
+            filter: drop-shadow(0px 0px 10px rgba(177, 92, 207, 0.3));
+        }
+
+        .register:active {
+            position: absolute;
+            left: 5.56%;
+            right: 5.56%;
+            top: 0%;
+            bottom: 78.53%;
+            width: 320px;
+            height: 38px;
+            outline: none !important;
+
+            background: #F6941E;
+            border-radius: 10px;
+            color: white;
+            padding: 11px 96px;
+
+            font-family: Inter;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 15px;
+            text-align: center;
+
+            border: none;
+            box-shadow: none;
+            border-radius: 10px;
+
+            filter: drop-shadow(0px 0px 10px rgba(177, 92, 207, 0.3));
+        }
+
+
+
+        .goto-login {
+            position: absolute;
+            left: 0%;
+            right: 0%;
+            top: 30%;
+            bottom: 0%;
+
+            background: #white;
+
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .goto-text {
+            margin-block-start: 17px;
+            margin-block-end: 17px;
+            margin-top: 25px;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 14px;
+            color: #F6941E;
+            text-align: center;
+        }
+
+
+        .link-status {
+            margin-block-start: 17px;
+            margin-block-end: 17px;
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 14px;
+            color: #F6941E;
+            text-align: center;
+        }
+
+        .link-status:hover {
+            margin-block-start: 17px;
+            margin-block-end: 17px;
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 14px;
+            color: #F6941E;
+            text-align: center;
+
+            text-decoration: underline;
+        }
+
+        .link-status:active {
+            margin-block-start: 17px;
+            margin-block-end: 17px;
+
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 14px;
+            color: #F6941E;
+            text-align: center;
+
+            font-weight: bold;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sign-form {
+            margin-left: -360px
+        }
+
+        .reg-content {
+            vertical-align: center;
+            width: 100%;
+            height: 100%;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<div class="reg-content">
+    <div class="logo">
+        <div class="discogr-logo">
+            <img src="/static/img/logo.svg" style="width:200px">
+        </div>
+    </div>
+    <div class="sign">
+        <form method="POST" action="/login" class="sign-form">
+            <div class="sign_up">
+                <p class="reg_title" style="margin-left: 20px; padding-bottom: 15px">Вход в личный кабинет</p>
+                <div class="forms">
+                    <div class="forms-in">
+                        <div class="email-form">
+                            <input class="email" name="email" type="email" placeholder="Эл. почта" required/>
+                        </div>
+                        <!--    <div class="name-form">
+                                <input class="name" name="name" placeholder="Имя"/>
+                            </div> password-form-->
+                        <div class="name-form">
+                            <input class="password" type="password" name="password" placeholder="Пароль" required/>
+                            <object class="view-icon" type="image/svg+xml" data="view.svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                     viewBox="0 0 16 16">
+                                    <path fill="#92929D" fill-rule="evenodd"
+                                          d="M1.407 7.625C2.637 4.605 5.173 2.667 8 2.667s5.364 1.938 6.593 4.958c.098.24.098.51 0 .75-1.23 3.02-3.766 4.958-6.593 4.958s-5.364-1.938-6.593-4.958a.996.996 0 010-.75zM8 12.1c2.28 0 4.37-1.575 5.433-4.1C12.37 5.476 10.28 3.9 8 3.9 5.72 3.9 3.63 5.476 2.567 8 3.63 10.524 5.72 12.1 8 12.1zm0-1.67c-1.32 0-2.389-1.087-2.389-2.43 0-1.342 1.07-2.43 2.389-2.43 1.32 0 2.389 1.088 2.389 2.43 0 1.343-1.07 2.43-2.389 2.43zm0-1.233c.65 0 1.176-.536 1.176-1.197S8.65 6.803 8 6.803c-.65 0-1.176.536-1.176 1.197S7.35 9.197 8 9.197z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </object>
+                        </div>
+                    </div>
+                </div>
+                <div class="reg-buttons">
+                    <button class="register">Войти</button>
+
+                    <div class="goto-login">
+                        <p class="goto-text">Забыли пароль? &ensp;<span class="login-status"><a
+                                class="link-status" href="/signup">Зарегистрироваться</a></span></p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification-is-danger">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+</body>
+
+</html>

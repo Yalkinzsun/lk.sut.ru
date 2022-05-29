@@ -3,11 +3,11 @@
 {% block content %}
 <div class="journal_menu">
     <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li style="margin-top:5px"><a href="{{url_for('show_journal')}}">Посещаемость</a></li>
-        <li style="margin-top:5px"><a id="active" href="{{url_for('students_works')}}">Работы </a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_statistic')}}">Статистика</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_attestation')}}">Аттестация</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_course_materials')}}">Содержание дисциплины</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_journal')}}">Посещаемость</a></li>
+        <li style="margin-top:5px"><a id="active" href="{{url_for('main.students_works')}}">Работы </a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_statistic')}}">Статистика</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_attestation')}}">Аттестация</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_course_materials')}}">Содержание дисциплины</a></li>
         <li>
             <div class="form-group">
                 <select name="journal_more" class="custom-select mx-sm-1" id="journal_disp" style="color:black; border-radius: 50px; background-color:white"> <!-- #FEEFDD -->
@@ -77,7 +77,7 @@
                     <div>
                         <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px;text-align:center;">
                             ждёт оценки</p>
-                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                        <a href="{{ url_for('main.check_students_work', work_id=cell[0]) }}"
                            class="btn btn-outline-secondary btn-sm active" role="button"
                            style="background-color: #F6941E; color: white; border:0px; margin-top:10px; margin-bottom:10px">проверить</a>
                     </div>
@@ -87,7 +87,7 @@
                     <div>
                         <p style="color: #28A745; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">
                             &#10003; зачтено</p>
-                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                        <a href="{{ url_for('main.check_students_work', work_id=cell[0]) }}"
                            class="btn btn-outline-secondary btn-sm active" role="button"
                            style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
                     </div>
@@ -97,7 +97,7 @@
                     <div>
                         <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">
                             &#9998; доделать</p>
-                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                        <a href="{{ url_for('main.check_students_work', work_id=cell[0]) }}"
                            class="btn btn-outline-secondary btn-sm active" role="button"
                            style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
                     </div>
@@ -107,7 +107,7 @@
                     <div>
                         <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">
                             &#10007; переделать</p>
-                        <a href="{{ url_for('check_students_work', work_id=cell[0]) }}"
+                        <a href="{{ url_for('main.check_students_work', work_id=cell[0]) }}"
                            class="btn btn-outline-secondary btn-sm active" role="button"
                            style="background-color: white; color: black; margin-top:10px; margin-bottom:10px">смотреть</a>
                     </div>

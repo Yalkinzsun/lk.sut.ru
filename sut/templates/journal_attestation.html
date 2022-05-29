@@ -3,11 +3,11 @@
 {% block content %}
 <div class="journal_menu">
     <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li style="margin-top:5px"><a href="{{url_for('show_journal')}}">Посещаемость</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('students_works')}}">Работы </a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_statistic')}}">Статистика</a></li>
-        <li style="margin-top:5px"><a id="active" href="{{url_for('show_attestation')}}">Аттестация</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_course_materials')}}">Содержание дисциплины</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_journal')}}">Посещаемость</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.students_works')}}">Работы </a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_statistic')}}">Статистика</a></li>
+        <li style="margin-top:5px"><a id="active" href="{{url_for('main.show_attestation')}}">Аттестация</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_course_materials')}}">Содержание дисциплины</a></li>
         <li>
             <div class="form-group">
                 <select name="journal_more" class="custom-select mx-sm-1" id="journal_disp" style="color:black; border-radius: 50px; background-color:white"> <!-- #FEEFDD -->

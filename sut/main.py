@@ -1,11 +1,11 @@
 from datetime import datetime
 from flask import render_template, request, url_for, flash, redirect, session
-
+import os
 from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
-
+from flask_login import login_required, current_user
 from DB.database import get_visits_data_from_db, insert_visits_data_to_db
-from bonch import app
+
 import sqlite3
 import sys
 import random
@@ -14,7 +14,10 @@ from scipy import stats
 import json
 import plotly
 from datetime import date
+from flask import Blueprint
+from flask import send_from_directory
 
+main = Blueprint('main', __name__)
 
 def get_data_from_session_if_possible():
     journal_group = ""
@@ -145,17 +148,19 @@ def is_it_necessary_to_insert(column_index):
     return True
 
 
-@app.route('/login')
+@main.route('/login')
 def login():
     return render_template('login.html')
 
 
-@app.route('/')
+@main.route('/')
+@login_required
 def index():
     return render_template('index.html')
 
 
-@app.route('/start_journal', methods=('GET', 'POST'))
+@main.route('/start_journal', methods=('GET', 'POST'))
+@login_required
 def start_journal():
     headings = get_visits_data_from_db(20200322)[0]
 
@@ -179,12 +184,13 @@ def start_journal():
         if index_of_column_for_highlighting != 1:
             session['day_index_in_headings'] = index_of_column_for_highlighting
             if is_it_necessary_to_insert(index_of_column_for_highlighting):
-                return redirect(url_for('insert_to_journal', day_index=index_of_column_for_highlighting))
+                return redirect(url_for('main.insert_to_journal', day_index=index_of_column_for_highlighting))
             else:
-                return redirect(url_for('show_journal'))
+                return redirect(url_for('main.show_journal'))
 
 
-@app.route('/journal/insert', methods=('GET', 'POST'))
+@main.route('/journal/insert', methods=('GET', 'POST'))
+@login_required
 def insert_to_journal():
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     headings, data = get_visits_data_from_db(20200322)
@@ -194,7 +200,7 @@ def insert_to_journal():
         truncated_data.append((row[0], row[index]))
 
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
         if request.method == 'POST':
             visits_data = []
@@ -220,7 +226,7 @@ def insert_to_journal():
 
             insert_visits_data_to_db(visits_data)
 
-            return redirect(url_for('show_journal'))
+            return redirect(url_for('main.show_journal'))
 
 
         return render_template('insert_to_journal.html',
@@ -233,12 +239,13 @@ def insert_to_journal():
                                journal_disp=journal_disp)
 
 
-@app.route('/journal')
+@main.route('/journal')
+@login_required
 def show_journal():
     headings, data = get_visits_data_from_db(20200322)
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
         return render_template('journal.html',
                                index=index,
@@ -249,12 +256,13 @@ def show_journal():
                                journal_disp=journal_disp)
 
 
-@app.route('/journal/works')
+@main.route('/journal/works')
+@login_required
 def students_works():
     headings, data = get_works_data_from_db()
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
         return render_template('students_works.html',
                                headings=headings,
@@ -264,7 +272,8 @@ def students_works():
                                journal_disp=journal_disp)
 
 
-@app.route('/journal/works/<string:work_id>', methods=('GET', 'POST'))
+@main.route('/journal/works/<string:work_id>', methods=('GET', 'POST'))
+@login_required
 def check_students_work(work_id):
     # headings, data = get_students_work_data_from_db()
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
@@ -282,7 +291,7 @@ def check_students_work(work_id):
         next_work_id = "12345"
 
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
 
         return render_template('check_students_work.html',
@@ -302,13 +311,14 @@ def check_students_work(work_id):
                                journal_disp=journal_disp)
 
 
-@app.route('/journal/course')
+@main.route('/journal/course')
+@login_required
 def show_course_materials():
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     data = get_course_data_from_db()
 
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
 
         return render_template('course.html',
@@ -318,7 +328,8 @@ def show_course_materials():
                                journal_disp=journal_disp)
 
 
-@app.route('/journal/course/task<string:task_id>', methods=('GET', 'POST'))
+@main.route('/journal/course/task<string:task_id>', methods=('GET', 'POST'))
+@login_required
 def show_course_task_materials(task_id):
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     data = get_course_data_from_db()
@@ -327,7 +338,7 @@ def show_course_task_materials(task_id):
         if task[0] == task_id:
             selected_task = task
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
         return render_template('selected_course_task.html',
                                selected_task=selected_task,
@@ -336,13 +347,14 @@ def show_course_task_materials(task_id):
                                journal_disp=journal_disp)
 
 
-@app.route('/journal/attestation')
+@main.route('/journal/attestation')
+@login_required
 def show_attestation():
     headings, data, count_of_works, count_of_practical_classes, count_of_all_classes, count_of_discipline_points, \
     count_of_points_for_three, count_of_points_for_four, count_of_points_for_five = get_attestation_data_from_db()
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
         return render_template('journal_attestation.html',
                                headings=headings,
@@ -359,7 +371,8 @@ def show_attestation():
                                journal_disp=journal_disp)
 
 
-@app.route('/journal/statistic')
+@main.route('/journal/statistic')
+@login_required
 def show_statistic():
     journal_group, journal_sem, journal_disp, index = get_data_from_session_if_possible()
 
@@ -535,7 +548,7 @@ def show_statistic():
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
     if journal_group == '':
-        return redirect(url_for('start_journal'))
+        return redirect(url_for('main.start_journal'))
     else:
         return render_template('statistic.html',
                                ids=ids,

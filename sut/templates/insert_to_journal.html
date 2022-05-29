@@ -5,11 +5,11 @@
 
 <div class="journal_menu">
     <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li style="margin-top:5px"><a id="active" href="{{url_for('show_journal')}}">Посещаемость</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('students_works')}}">Работы </a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_statistic')}}">Статистика</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_attestation')}}">Аттестация</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_course_materials')}}">Содержание дисциплины</a></li>
+        <li style="margin-top:5px"><a id="active" href="{{url_for('main.show_journal')}}">Посещаемость</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.students_works')}}">Работы </a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_statistic')}}">Статистика</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_attestation')}}">Аттестация</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_course_materials')}}">Содержание дисциплины</a></li>
         <li>
             <div class="form-group">
                 <select name="journal_more" class="custom-select mx-sm-1" id="journal_disp"
@@ -24,7 +24,7 @@
         </li>
     </ul>
 </div>
-<form id="insert_visits" action="{{ url_for('insert_to_journal', day_index=index) }}" method="POST"></form>
+<form id="insert_visits" action="{{ url_for('main.insert_to_journal', day_index=index) }}" method="POST"></form>
 <div class="table_area">
     <table align=left class="table table-bordered" style="width: 300px">
         <tr class="table__header">

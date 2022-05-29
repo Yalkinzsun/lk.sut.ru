@@ -5,11 +5,11 @@
 
 <div class="journal_menu">
     <ul id="menu_p1" style="display:flex;  list-style: none; text-decoration: none;  padding-left: 15px; ">
-        <li style="margin-top:5px"><a href="{{url_for('show_journal')}}">Посещаемость</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('students_works')}}">Работы </a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_statistic')}}">Статистика</a></li>
-        <li style="margin-top:5px"><a href="{{url_for('show_attestation')}}">Аттестация</a></li>
-        <li style="margin-top:5px"><a id="active" href="{{url_for('show_course_materials')}}">Содержание дисциплины</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_journal')}}">Посещаемость</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.students_works')}}">Работы </a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_statistic')}}">Статистика</a></li>
+        <li style="margin-top:5px"><a href="{{url_for('main.show_attestation')}}">Аттестация</a></li>
+        <li style="margin-top:5px"><a id="active" href="{{url_for('main.show_course_materials')}}">Содержание дисциплины</a></li>
         <li>
             <div class="form-group">
                 <select name="journal_more" class="custom-select mx-sm-1" id="journal_disp" style="color:black; border-radius: 50px; background-color:white"> <!-- #FEEFDD -->
@@ -36,7 +36,7 @@
               </div>
                <div style="display:flex; justify-content: right; align-items: center; width: 20%">
                <img src="/static/img/eye_icon.svg" style="width:22px; height: 22px; margin-bottom: 0px; margin-right: 15px" alt="">
-                   <a href="{{url_for('show_course_task_materials', task_id=task[0])}}" style="text-decoration:none; color:grey"> <img src="/static/img/edit_icon_dark_grey.svg" style="width:22px; height: 22px; margin-bottom: 5px; margin-right: 15px" alt=""></a>
+                   <a href="{{url_for('main.show_course_task_materials', task_id=task[0])}}" style="text-decoration:none; color:grey"> <img src="/static/img/edit_icon_dark_grey.svg" style="width:22px; height: 22px; margin-bottom: 5px; margin-right: 15px" alt=""></a>
                </div>
            </div>
            <div>

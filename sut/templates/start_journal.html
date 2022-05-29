@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>lk | bonch</title>
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/content/site.css"/>
@@ -320,7 +321,7 @@
     <button form="my_form" class="btn btn-outline-success my-2 my-sm-0" type="submit">Подписать</button>
     {% else %}
     <div style="display:flex; align-content:center; justify-content: center; height: 250px"><p
-            style="font-size:18px; font-weight: bold; margin-top: 100px">Выберите группу, семестр и дисциплину</p></div>
+            style="font-size:24px; font-weight: bold; margin-top: 100px">Выберите группу, семестр и дисциплину</p></div>
     {% endif %}
 
     {% endblock %}

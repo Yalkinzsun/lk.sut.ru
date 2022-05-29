@@ -93,7 +93,7 @@
   {% endif %}
 
       <br>
- <form id="set_work_completion_status" action="{{ url_for('check_students_work', work_id=work_id) }}" method="POST">
+ <form id="set_work_completion_status" action="{{ url_for('main.check_students_work', work_id=work_id) }}" method="POST">
 
      <div class="form-group">
     <label for="comment_on_work">Комментарий к работе</label>
@@ -142,11 +142,11 @@
 
   <div  style="width:5%;">
 
-   <a href="{{ url_for('students_works') }}">
+   <a href="{{ url_for('main.students_works') }}">
        <img id="close_button" style="width:24px; height:24px; margin: 0px" src="/static/img/close_icon.svg" alt="edit icon">
    </a> <br>
     {% if next_work_id != '' %}
-      <a href="{{ url_for('check_students_work', work_id=next_work_id)}}">
+      <a href="{{ url_for('main.check_students_work', work_id=next_work_id)}}">
        <img id="next_button" style="width:48x; height:48px; background-color:#F4F4F4; border-radius: 15px; margin-top: 250px " src="/static/img/next_icon.svg" alt="edit icon">
    </a>
       {% endif %}
