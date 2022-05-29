@@ -145,6 +145,11 @@ def is_it_necessary_to_insert(column_index):
     return True
 
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
