@@ -25,6 +25,13 @@
         padding-left:15px;
         padding-right:15px;
     }
+
+  #menu_p1 li a:hover {
+        color: #F6941E;
+        text-decoration: none;
+    }
+
+
     #menu_p2  a {
         color:black;
         font-size:18px;
@@ -135,11 +142,14 @@
             <img style="width: 32px; height: 32px" src="/static/img/menu_icon.svg" alt="menu icon">
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <p style="margin-left:25px;padding-right:10px; margin-bottom: 0px; font-size: 14px; color:grey">ТЕКСТ
-                РАЗДЕЛИТЕЛЯ</p>
-            <a class="dropdown-item" href="#">Действие</a>
-            <a class="dropdown-item" href="#">Другое действие</a>
-            <a class="dropdown-item" href="#">Что-то еще здесь</a>
+            <a class="dropdown-item" href="{{ url_for('main.index') }}">Главное меню</a>
+            <p style="margin-left:25px;padding-right:10px; margin-bottom: 0px; font-size: 14px; color:grey;">ВЕДОМОСТИ</p>
+            <a class="dropdown-item" href="#">Учебные</a>
+            <a class="dropdown-item" href="#">Экзаменационые листы</a>
+            <a class="dropdown-item" href="#">Факультативные</a>
+            <a class="dropdown-item" href="#">Сообщения по пересдачам</a>
+            <a class="dropdown-item" href="#">Вступительные испытания</a>
+            <a class="dropdown-item" href="#">Инструкции</a>
         </div>
     </div>
 

@@ -113,6 +113,17 @@
                     </div>
                 </div>
 
+                {% elif cell[1] == "st5" %}
+                <div style="display:flex; align-content:center; justify-content: center;">
+                    <div>
+                        <p style="color: black; font-weight:normal; margin-top:10px; margin-bottom: 0px; text-align:center;">
+                            &#10007; переделать</p>
+                       <a href="{{ url_for('main.check_students_work', work_id=cell[0]) }}"
+                           class="btn btn-outline-secondary btn-sm active" role="button"
+                           style="background-color: #F6941E; color: white; border:0px; margin-top:10px; margin-bottom:10px">проверить</a>
+                    </div>
+                </div>
+
                 {% else %}
 
                 <!--                    {{data[data.index(row)][0][0]}}{{row.index(cell)}}-->

@@ -65,7 +65,7 @@
                         <img src="/static/img/edit_icon_orange.svg" alt="edit icon">
                     </a>
                     {% else %}
-                    <a href="{{ url_for('insert_to_journal', day_index=headings.index(header)) }}">
+                    <a href="{{ url_for('main.insert_to_journal', day_index=headings.index(header)) }}">
                         <img src="/static/img/edit_icon.svg" alt="edit icon">
                     </a>
                     {% endif %}
@@ -110,7 +110,7 @@
             {% if row.index(cell) == 0 %}
             <td class="table__cell_fixed">
                 {{cell[0]}}. {{cell[1]}} <br>
-                <p style="font-weight:bold; color: #F6941E; margin:0px;">&emsp;
+                <p style="color: #F6941E; margin:0px;">&emsp;
                     {% if cell[2] == '1' %}
                     староста
                      {% endif %}
